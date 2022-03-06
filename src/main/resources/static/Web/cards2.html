@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tus tarjetas</title>
+  <link rel="stylesheet" href="./styles/style-cards.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+  </script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+  <link rel="shortcut icon" href="./img/logo2.png">
+
+</head>
+
+<body>
+
+  <header>
+    <img src="./img/logo2.png">
+    <!-- <div class="imagenClientes">
+      <img src="./img/accountsimage.jfif">
+    </div> -->
+  <div class="navi">
+      <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
+            type="button" role="tab" aria-controls="pills-home" aria-selected="true"><a href="./index.html"
+              style="text-decoration: none;">Home</a></button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="pills-accounts-tab" data-bs-toggle="pill" data-bs-target="#pills-accounts"
+            type="button" role="tab" aria-controls="pills-accounts" aria-selected="false"><a href="./accounts.html"
+              style="text-decoration: none;"><b>Tus cuentas</b></a></button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="pills-cards-tab" data-bs-toggle="pill" data-bs-target="#pills-cards"
+            type="button" role="tab" aria-controls="pills-cards" aria-selected="false"><a href="./cards2.html"
+              style="text-decoration: none;"><b>Tus tarjetas</b></a></button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button id="cerrarSesion" class="nav-link" id="pills-cerrar-tab" data-bs-toggle="pill"
+            data-bs-target="#pills-cerrar" type="button" role="tab" aria-controls="pills-cerrar"
+            aria-selected="false"><a href="./login.html" style="text-decoration: none;"
+              v-on:click="cerrarSesion()"><b>Cerrar Sesión</b></a></button>
+        </li>
+      </ul>
+      <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"></div>
+        <div class="tab-pane fade" id="pills-accounts" role="tabpanel" aria-labelledby="pills-accounts-tab"></div>
+        <div class="tab-pane fade" id="pills-cards" role="tabpanel" aria-labelledby="pills-cards-tab"></div>
+        <div class="tab-pane fade" id="pills-cerrar" role="tabpanel" aria-labelledby="pills-cerrar-tab"></div>
+      </div>
+    </div>
+  
+    
+  
+  
+    
+    
+  
+  </header>
+  <h1>Detalle de tus tarjetas</h1>
+
+  <div class="box">
+    <div class="vertical">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Ayuda</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./loan-application.html">Solicita tu Préstamo</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./transactions.html">Transferencias</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Inversiones</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <main>
+    <div id="app">
+      <div class="boxNuevaTarjeta" v-show="cards.length <6">
+        <p class="preguntaNuevaTarjeta">¿Te gustaría generar una nueva tarjeta?</p>
+        <button id="botonNuevaTarjeta" class="btn btn-primary" type="button">
+          <a href="./create-cards.html">Añadir Tarjeta</a></button>
+
+      </div>
+
+      <div class="cvvYCard">
+        <div v-if="card" v-for="card in cards" v-show="card.status==true">
+          <div class="container1x">
+            <div class="cardx">
+              <div class="card-innerx">
+                <!-- <div class="backx"> -->
+                <div
+                  :class="'frontx '+  [card.color == 'TITANIUM' ? 'titanium' : card.color == 'SILVER' ? 'silver' : 'gold']">
+                  <!-- <img src="./img/fondo-titanium5.jfif" class="fondoDoradox"> -->
+                  <div class="rowx">
+                    <img class="imagenChipx" src="./img/chip.png" width="60px">
+                    <img src="./img/visa7.jpg" width="80px">
+                  </div>
+                  <div class="tipoDeTarjeta">{{card.type}}</div>
+                  <div class="rowx card-nox">
+                    <p>{{card.number}}</p>
+                    <p>{{card.number}}</p>
+                    <p>{{card.number}}</p>
+                    <p>{{card.number}}</p>
+                  </div>
+                  <div class="rowx card-holderx">
+                    <p>CARD HOLDER</p>
+                    <p>VALID TILL</p>
+                  </div>
+                  <div class="rowx namex">
+                    <p>{{toUpper(card.cardHolder)}}</p>
+                    <p>{{card.thruDate}}</p>
+                  </div>
+                </div>
+              </div>
+              <div
+                :class="'backx '+  [card.color == 'TITANIUM' ? 'titanium2' : card.color == 'SILVER' ? 'silver2' : 'gold2']">
+                <!-- <div
+              :class="'backx '+  [card.color == 'TITANIUM' ? 'titanium' : card.color == 'SILVER' ? 'silver' : 'gold']">-->
+                <!-- <img src="./img/fondo-plateado.jpg" class="fondoDoradox"> -->
+                <div class="barx"></div>
+                <div class="rowx card-cvvx">
+                  <div class="patternx">
+                    <img src="./img/pattern2.png">
+                  </div>
+                  <p>{{card.cvv}}</p>
+                </div>
+                <div class="rowx card-textx">
+                  <p>Esta tarjeta le pertenece a MindHub Brothers Bank. De ser extraviada se ruega devolver a su
+                    sucursal
+                    más cercana.</p>
+                </div>
+                <div class="rowx signaturex">
+                  <p>CUSTOMER SIGNATURE</p>
+                  <img src="./img/visa3.png" width="80px">
+                </div>
+              </div>
+            </div>
+
+            <div class="botonEliminarTarjeta">
+              <!-- <div class="botonEliminarTarjeta" v-show="cards.length >0"> -->
+              <!-- <p class="preguntaNuevaTarjeta">¿Te gustaría eliminar una tarjeta?</p> -->
+              <button class="btn btn-primary" type="button" v-on:click="deleteCard(card.id)">
+                X</button>
+
+              <!-- <div>
+  <div id="current_date"></p>
+    <script>
+    date = new Date();
+    year = date.getFullYear();
+    month = date.getMonth() + 1;
+    day = date.getDate();
+    document.getElementById("current_date").innerHTML = year + "-" + month + "-" + day;
+
+  
+    </script>
+</div>
+
+                <div v-if="card.thruDate>'2027-02-26'">
+                    <p class="tarjetaVencida">Tu tarjeta está vencida!</p>
+                </div> -->
+            </div>
+          </div>
+        </div>
+
+
+
+
+      </div>
+      <br>
+      <br>
+
+    </div>
+
+    <!-- Este es el div que cierra el id="app" -->
+
+    <div v-show="cards.length >0">
+      <p>¿Te gustaría eliminar una tarjeta? Acciona su botón y listo!</p>
+      <!-- <button class="btn btn-primary" type="button" >
+        <a href="#">Eliminar Tarjeta</a></button> -->
+
+    </div>
+
+
+
+    </div>
+
+
+
+  </main>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
+  <script src="./js/cards.js"></script>
+</body>
+
+<footer>
+  <p>Copyright 2022 Yes! MindHub Brothers Bank. Todos los derechos reservados. Prohibida la duplicación, distribución o
+    almacenamiento en
+    cualquier medio.</p>
+</footer>
+
+</html>

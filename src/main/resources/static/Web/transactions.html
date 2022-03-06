@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transferencias</title>
+
+    <link rel="stylesheet" href="./styles/style-transactions.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+    </script>
+
+    <link rel="shortcut icon" href="./img/logo2.png">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+<body>
+    <header>
+        <img class="logo" src="./img/logo2.png">
+
+
+        <div class="navi">
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                        aria-selected="true"><a href="./index.html" style="text-decoration: none;">Home</a></button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-accounts-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-accounts" type="button" role="tab" aria-controls="pills-accounts"
+                        aria-selected="false"><a href="./accounts.html" style="text-decoration: none;"><b>Tus
+                                cuentas</b></a></button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-cards-tab" data-bs-toggle="pill" data-bs-target="#pills-cards"
+                        type="button" role="tab" aria-controls="pills-cards" aria-selected="false"><a
+                            href="./cards2.html" style="text-decoration: none;"><b>Tus tarjetas</b></a></button>
+                </li>
+
+                <li class="nav-item" role="presentation">
+                    <button id="cerrarSesion" class="nav-link" id="pills-cerrar-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-cerrar" type="button" role="tab" aria-controls="pills-cerrar"
+                        aria-selected="false"><a href="./login.html" style="text-decoration: none;"
+                            v-on:click="cerrarSesion()"><b>Cerrar Sesión</b></a></button>
+                </li>
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                </div>
+                <div class="tab-pane fade" id="pills-accounts" role="tabpanel" aria-labelledby="pills-accounts-tab">
+                </div>
+                <div class="tab-pane fade" id="pills-cards" role="tabpanel" aria-labelledby="pills-cards-tab"></div>
+                <div class="tab-pane fade" id="pills-cerrar" role="tabpanel" aria-labelledby="pills-cerrar-tab"></div>
+            </div>
+        </div>
+
+    </header>
+
+    <h1>Tus transferencias</h1>
+
+    <div class="box">
+        <div class="vertical">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Ayuda</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./loan-application.html">Solicita tu Préstamo</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./transactions.html">Transferencias</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Inversiones</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <main>
+        <div class="formularioTransferencias">
+
+            <div id="app" class="d-flex justify-content-between">
+                <div id="transaction">
+                    <p>Selecciona la cuenta a la que deseas transferir</p>
+                    <select v-model="tipoTransferencia" class="form-select" name="tipoTransferencia"
+                        aria-label="Default select example">
+                        <option value="PROPIA">Una de tus cuentas</option>
+                        <option value="AJENA">Una cuenta de terceros</option>
+                    </select>
+
+                    <template v-if='tipoTransferencia=="PROPIA" || tipoTransferencia=="AJENA"'>
+                        <br>
+                        <p>Cuenta origen</p>
+                        <div class="d-flex flex-wrap">
+                            <select v-model="cuentaOrigen" class="form-select" name="cuentaOrigen"
+                                aria-label="Default select example">
+                                <option v-for="account in accounts" v-bind:value="account.number">
+                                    {{account.number}}, Saldo: $ {{account.balance}} </option>
+                            </select><br>
+                        </div>
+
+                        <template v-if='cuentaOrigen != "" && tipoTransferencia=="PROPIA"'>
+                            <br>
+                            <p>Cuenta destino</p>
+                            <div class="d-flex flex-wrap info_cards_client">
+
+                                <select v-model="cuentaDestino" class="form-select" name="cuentaOrigen"
+                                    aria-label="Default select example">
+                                    <option v-bind:value="account.number" v-for="account in accounts">
+                                        {{account.number}}, Saldo: $
+                                        {{account.balance}}
+                                    </option>
+                                </select>
+
+                            </div>
+                        </template>
+                        <template v-else>
+                            <label for="cuentaDestino">Numero de cuenta Destino</label>
+                            <input type="text" v-model="cuentaDestino" id="cuentaDestino">
+                            <div class="form">
+                                <br>
+                                <span class="text-nomb">
+                                    Numero de cuenta Destino
+                                </span>
+
+                                <input v-model="cuentaDestino" type="text" required>
+                                <label class="lbl-nombre">
+                                </label>
+                            </div>
+                            <br>
+                            <template v-if='cuentaDestino !=""'>
+                                <p>Nombre del titular de la cuenta Destino: {{nombreDestinatario}}</p>
+                            </template>
+                        </template>
+
+                    </template>
+                    <br>
+                    <div class="form">
+
+                        <span class="text-nomb">
+                            Monto a Transferir: $
+                        </span>
+                        <input v-model="monto" type="text" required>
+                        <label class="lbl-nombre">
+                        </label>
+                    </div>
+                    <br>
+                    <div class="form">
+
+                        <span class="text-nomb">
+                            Descripcion de la transaccion
+                        </span>
+                        <input v-model="descripcionTransferencia" type="text" required>
+                        <label class="lbl-nombre">
+                        </label>
+                    </div>
+
+                    <br>
+                    <button @click="realizarTransaccion()" class="btn btn-primary">Transferir!</button>
+                </div>
+
+
+            </div>
+
+
+    </main>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./js/transactions.js"></script>
+
+</body>
+
+</html>

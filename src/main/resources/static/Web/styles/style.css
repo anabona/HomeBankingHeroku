@@ -1,0 +1,186 @@
+header {
+    display: flex;
+    align-items: center;
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+.logo{
+    margin-top: -10vh;
+    background-color: black;
+}
+
+#cerrarSesion{
+    color: red;
+}
+
+.color-debito{
+    color: red;
+}
+
+.color-credito{
+    color: green;
+}
+
+.navi{
+    margin-top: -1vh;
+   margin-left: 1vw;
+   width: 70vw;
+   height: 40vh;
+    font-size: larger;
+    background-image: url("../img/homebankingalargado.jpg"); 
+    display: flex;
+    justify-content: flex-end;
+    color: rgba(23,95,171,255);
+}
+
+.imagenClientes{
+    margin-left: 60vw;
+}
+
+main {
+    margin-left: 2rem;
+    width: 85%;
+ /* background-color: rgb(240, 231, 231);  */
+}
+
+h1{
+    margin-left: 1.5vw;
+    margin-top: 7vh;
+    background-color: rgba(23,95,171,255);
+}
+
+h2{
+    margin-left: 2vw;
+    margin-bottom: 2vh;
+    font-style: italic;
+}
+
+.box{
+    margin-left: 2vw;
+    margin-top: 1vh;
+    margin-right: 4vw;
+    display: flex;
+    font-size: 28px;
+    color: rgba(23,95,171,255);
+}
+
+.tabla{
+    display: flex;
+    padding: 1.5rem;
+    justify-content: center;
+    margin-top: -17rem;
+    width: 35vw;
+    height: 50vh;
+    margin-left: 20rem;
+    font-size: 15px;
+    background-color: rgb(235, 206, 212);
+    border:solid 10px #ccc;
+    border-radius:15px;
+    box-shadow: -8px 8px 10px blue;
+} 
+
+#botonAgregarCuenta{
+    margin-top: -2rem;
+    width: 100%;
+}
+
+#botonAgregarLoan{
+    width: 100%;
+    margin-top: -2rem;
+}
+
+.tablaLoans{
+    display: flex;
+    justify-content: center;
+    padding-top: 1.5rem;
+    margin-top: -20rem;
+    margin-left: 52rem;
+    width: 30vw;
+    height: 40vh;
+    font-size: 15px;
+    background-color: rgb(235, 206, 212);
+    border:solid 10px #ccc;
+    border-radius:15px;
+    box-shadow: -8px 8px 10px blue;
+}
+
+.tabla2 {
+    display: flex;
+    justify-content: center;
+    margin-top: -15rem;
+    /* width: 50vw; */
+    /* height: 100vh; */
+    margin-left: 25rem;
+    font-size: 18px;
+    background-color: rgb(235, 206, 212);
+    border:solid 10px #ccc;
+    border-radius:15px;
+    box-shadow: -8px 8px 10px blue;
+}
+
+.color-rojo{
+    color: red;
+}
+
+.color-verde{
+    color: green;
+}
+
+.inversiones{
+    margin-top: 7vh;
+    margin-left: 28vw;
+    width: 55vw;
+    background-color: ivory;
+    padding-left: 2vw;
+    padding-top: 2vh;
+    background: wheat;
+    border:solid 10px #ccc;
+    border-radius:15px;
+    box-shadow: -8px -8px 10px 0px red,8px -8px 10px yellow, 8px 8px 10px green, -8px 8px 10px blue;
+    font-size: 13px;
+}
+
+.inversiones > button{
+    margin-left: 40vw;
+}
+
+footer{
+    margin-top: 8vh;
+    position: flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background-color: rgb(200, 200, 238);
+
+}
+
+.footer2{
+    display: block;
+    margin-top: 8vh;
+    margin-left: -2rem;
+    color: black;
+    width: 100%;
+    font-size: 15px;
+    padding: 2rem;
+    background-color: rgb(200, 200, 238);
+    position: absolute;
+}
+
+.footer2 > p{
+    margin-left: 6rem;
+}
+
+.formularioRegistracion{
+    margin-top: -30vh;
+    margin-left: 30vw;
+    font-size: 25px;
+    width: 50%;
+}
+
+#botonRegistrarse{
+    color: black;
+    background-color: #ccc;
+
+}

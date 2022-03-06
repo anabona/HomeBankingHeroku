@@ -1,0 +1,107 @@
+header {
+  display: flex;
+  align-items: center;
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+.logo{
+  margin-top: -10vh;
+  background-color: black;
+}
+
+#cerrarSesion{
+  color: red;
+}
+
+.navi{
+  margin-top: -1vh;
+ margin-left: 1vw;
+ width: 70vw;
+ height: 40vh;
+  font-size: larger;
+  background-image: url("../img/transfers.jpg");
+  /* background-image: url("../img/homebankingalargado.jpg");  */
+  display: flex;
+  justify-content: flex-end;
+  color: rgba(23,95,171,255);
+  background-position: bottom;
+}
+
+.imagenClientes{
+  margin-left: 60vw;
+}
+
+main {
+  margin-left: 2rem;
+  width: 85%;
+/* background-color: rgb(240, 231, 231);  */
+}
+
+.formularioTransferencias{
+  width: 55vw;
+  margin-left: 30vw;
+  margin-top: -13rem;
+  background: linear-gradient(70deg, rgb(97, 204, 76), white);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: rgb(77, 77, 82);
+
+
+}
+
+h1{
+  margin-left: 1.5vw;
+  margin-top: 7vh;
+  background-color: rgba(23,95,171,255);
+}
+
+h2{
+  margin-left: 2vw;
+  margin-bottom: 2vh;
+  font-style: italic;
+}
+.box{
+  margin-left: 2vw;
+  margin-top: 1vh;
+  margin-right: 4vw;
+  display: flex;
+  font-size: 28px;
+  color: rgba(23,95,171,255);
+}
+
+.buttonTransfer {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;	
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #4cacaf;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+  margin-top: 2rem;
+  margin-left: 10rem;
+}
+
+.buttonTransfer:hover {background-color: #3e8e41}
+
+.buttonTransfer:active {
+  background-color: #f0e229;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+footer{
+  margin-top: 8vh;
+  position: flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: rgb(200, 200, 238);
+
+}

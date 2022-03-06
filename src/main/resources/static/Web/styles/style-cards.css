@@ -1,0 +1,424 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+.navi {
+  margin-top: 5vh;
+  margin-left: 20vw;
+  font-size: larger;
+}
+
+
+main {
+  margin-left: 25rem;
+  width: 85%;
+  /* background-color: rgb(240, 231, 231); */
+  margin-top: -15rem;
+}
+
+h1 {
+  margin-left: 1.5vw;
+  margin-top: 7vh;
+}
+
+h2 {
+  margin-left: 2vw;
+  margin-bottom: 2vh;
+  font-style: italic;
+}
+
+.titledebito {
+  margin-top: -61vh;
+  margin-left: 35vw;
+  font-size: 29px;
+  width: 30%;
+}
+
+.box {
+  margin-left: 3vw;
+  margin-top: 4vh;
+  margin-right: 4vw;
+  display: flex;
+  font-size: 28px;
+}
+
+
+.logo {
+  margin-top: -10vh;
+  background-color: black;
+}
+
+#cerrarSesion {
+  color: red;
+}
+
+.navi {
+  margin-top: -1vh;
+  margin-left: 1vw;
+  width: 70vw;
+  height: 40vh;
+  font-size: larger;
+  background-image: url("../img/imagen\ para\ tarjeta\ de\ credito.jpg");
+  /* background-image: url("../img/homebankingalargado.jpg"); */
+  display: flex;
+  justify-content: flex-end;
+  text-align: center;
+  /* background-color: rgba(250, 235, 215, 60%); */
+  background-repeat: no-repeat;
+  background-position:center;
+}
+
+.navi > ul {
+  color: rebeccapurple;
+}
+
+h1 {
+  margin-left: 1.5vw;
+  margin-top: 2vh;
+  background-color: rgba(23, 95, 171, 255);
+  color: #000;
+}
+
+.container1x {
+  min-height: 50vh;
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+
+}
+
+.cvvYCard {
+  margin-top: -23vh;
+}
+
+.container2x {
+  min-height: 50vh;
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -30rem;
+  margin-left: 40vw;
+}
+
+.container3 {
+  min-height: 50vh;
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cardx {
+  width: 500px;
+  height: 300px;
+  color: #000;
+  cursor: pointer;
+  border-radius: 15px;
+  perspective: 1000px;
+}
+
+.card-innerx {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 0.8s; 
+  transform-style: preserve-3d;
+  transform: rotateY(0deg);
+}
+
+.frontx,
+.backx {
+  width: 100%;
+  height: 100%;
+  /* background-image: linear-gradient(45deg, #0045c7, #ff2c7d); */
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 20px 30px;
+  border-radius: 15px;
+  overflow: hidden;
+  z-index: 1;
+  backface-visibility: hidden;
+}
+
+.rowx {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fondoDoradox {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* opacity: 0.3; */
+  z-index: -1;
+}
+
+.fondoTitanium {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* opacity: 0.3; */
+  z-index: -1;
+}
+
+
+.card-nox {
+  font-size: 35px;
+  margin-top: 40px;
+
+}
+
+.card-holderx {
+  font-size: 12px;
+  margin-top: 40px;
+  
+}
+
+.namex {
+  font-size: 22px;
+  margin-top: -15px;
+}
+
+.barx {
+  background: #222;
+  margin-left: -30px;
+  margin-right: -30px;
+  height: 60px;
+  margin-top: 10px;
+}
+
+.card-cvvx {
+  margin-top: 20px;
+}
+
+.card-cvvx div {
+  flex: 1;
+}
+
+.card-cvvx img {
+  width: 100%;
+  display: block;
+  height: 55px;
+  margin-top: -20px;
+  /* line-height: 0; */
+}
+
+.card-cvvx p {
+  background: #fff;
+  color: #000;
+  font-size: 22px;
+  padding: 10px 20px;
+}
+
+.card-textx {
+  margin-top: -8px;
+  font-size: 14px;
+}
+
+.signaturex {
+  margin-top: 2px;
+}
+
+.backx {
+  transform: rotateY(-180deg);
+  transition: transform 0.8s; 
+  transform-style: preserve-3d;
+
+}
+
+.cardx:hover .card-innerx {
+  transform: rotateY(180deg);
+}
+
+.cardx:hover .backx {
+  transform: rotateY(0deg);
+}
+
+
+footer {
+  margin-top: 80vh;
+  position: flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: rgb(200, 200, 238);
+
+}
+
+.titanium,
+.titanium2 {
+  background-image: url(../img/fondo-titanium5.jfif);
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.9;
+  z-index: 2;
+  text-align: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+
+}
+
+.gold {
+  background-image: url(../img/fondo-dorado.jpg);
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.9;
+  z-index: 2;
+  text-align: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+
+}
+
+.silver {
+  background-image: url(../img/fondo-plateado.jfif);
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.9;
+  z-index: 2;
+  text-align: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+
+}
+
+.fondoUniversal {
+  background-image: url(../img/fondo-plateado.jfif);
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* opacity: 0.3; */
+  z-index: 2;
+  text-align: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+
+.silver2 {
+  background-image: url(../img/fondo-plateado.jfif);
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.9;
+  z-index: 2;
+  text-align: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+
+}
+
+.gold2 {
+  background-image: url(../img/fondo-dorado.jpg);
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.9;
+  z-index: 2;
+  text-align: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  box-shadow: 10px 5px 5px grey;
+
+}
+
+.codigox {
+  margin-left: 70vw;
+  border: solid 2px rgb(131, 127, 127);
+  width: 18vw;
+}
+
+.tipoDeTarjeta {
+  margin-left: 23vw;
+}
+
+.cuadroCvv {
+  border: solid 2px cornflowerblue;
+  width: 18vw;
+  box-shadow: 10px 5px 5px grey;
+
+}
+
+.boxNuevaTarjeta {
+  margin-top: -10rem;
+  margin-left: 30rem;
+  font-size: 20px;
+  border-radius: 20% solid black;
+  padding: 3rem;
+}
+
+.botonNuevaTarjeta {
+  margin-left: 25rem;
+}
+
+.botonEliminarTarjeta {
+  margin-top: -15rem;
+  /* margin-left: 32rem; */
+}
+
+
+.formularioAgregarTarjetas {
+  margin-top: 1rem;
+  margin-left: 4rem;
+  font-size: 20px;
+  border-radius: 20% solid black;
+  padding: 3rem;
+  background-color: rgb(232, 236, 240);
+  width: 60%;
+  font-size: 25px;
+  /* opacity: 0.7; */
+  /* //filter: blur(6px); */
+
+}
+
+.formularioAgregarTarjetas>select {
+  font-size: 20px;
+  padding: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  margin-left: 1rem;
+  margin-right: 5rem;
+}
+
+.footer2 {
+  margin-top: 8vh;
+  position: flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: rgb(200, 200, 238);
+}
+
+.tarjetaVencida {
+  color: red;
+}
