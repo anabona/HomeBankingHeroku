@@ -24,7 +24,12 @@ let appIndex = new Vue({
         .then((response) => {
           console.log("signed in!!!");
           alert("Tus datos son correctos!");
+          if(this.name == "admin") {
+              window.location.href="/manager.html";  
+          } 
+          else {
           window.location.href = "/web/accounts.html";
+          }
         })
         .catch(function (error) {
           if (error.response) {

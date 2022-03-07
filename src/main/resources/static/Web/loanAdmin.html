@@ -14,27 +14,25 @@
   <link rel="shortcut icon" href="./img/logo2.png">
 </head>
 <body>
-    <h1>Este es el sitio para pedir prestamos (solo Admins)</h1>
+    <h1>Este es el sitio para generar nuevos tipos de préstamos (solo Admins)</h1>
 
     
     <main>
         <div id="app">
-            <div class="formPrestamos">
-                <h4>SELECCIONA EL TIPO DE PRÉSTAMO</h4>
-                <select v-model="name"  @change="filter()" class="form-select" aria-label="Default select example">
-                    <option v-for="loan in loans" v-bind:value="loan.name">{{loan.name}}</option>
-                </select>
+            <div class="formPrestamosAdmin">
+                <h4>ELIGE UN NOMBRE QUE DESCRIBA EL PRÉSTAMO</h4>
+                <input v-model="name" type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                
                 <br>
-                <h5>Para este tipo de préstamo, el monto máximo es de $ {{maxAmount}}</h5>
-                <h5>El plan de pagos disponible puede ser de {{payments}} cuotas.</h5>
+                
                 <br>
                 <div class="boxMontoCuotas">
                     <div class="boxMonto">
-                        <h4>INGRESA EL MONTO</h4>
+                        <h4>INGRESA EL MONTO MAXIMO</h4>
                         <div class="input-group mb-3">
                             <span class="input-group-text">$ </span>
                             <input v-model="amount" type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-                            <span class="input-group-text">.00</span>
+                           
                         </div>
                     </div>
                     <br>
@@ -45,14 +43,8 @@
                         </div>
                     </div>
                 </div>
-                <button class="botonCuota" @click="calcularCuota()" class="btn btn-primary">Calcular el monto de la cuota</button>
-                <br>
-                <p>Tu plan de cuotas, quedaría con un monto mensual de $ {{cuotaMensual}}</p>
-                <br>
-                <h4>SELECCIONA LA CUENTA DESTINO</h4>
-                <select v-model="cuentaDestino" class="form-select" aria-label="Default select example">
-                    <option v-for="account in accounts" v-bind:value="account.number">{{account.number}}, Saldo: $ {{account.balance}} </option>
-                </select>
+                
+                
                 <br>
                 <br>
                 <button class="botonPrestamo" @click="createLoans()" class="btn btn-primary">Solicitar!</button>

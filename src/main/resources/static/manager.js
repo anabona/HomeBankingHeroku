@@ -17,15 +17,16 @@ var app = new Vue({
     },
 
     loadData() {
-      axios.get("/clients").then((response) => {
+      axios.get("http://localhost:8080/api/clients").then((response) => {
         console.log(response);
         this.clients = response.data._embedded.clients;
+        
       });
     },
 
     postClient() {
       if (this.fname != "" && this.lname != "" && this.email.includes("@")) {
-        axios.post("/clients", {
+        axios.post("http://localhost:8080/api/clients", {
           firstName: this.fname,
           lastName: this.lname,
           email: this.email,
