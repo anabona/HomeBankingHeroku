@@ -1,62 +1,62 @@
 package com.mindhub.homebanking.DTO;
 
-import com.mindhub.homebanking.models.Client;
-import com.mindhub.homebanking.models.Loan;
-import com.mindhub.homebanking.repositories.LoanRepository;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.util.HashSet;
-import java.util.Set;
-
 public class LoanApplicationDTO {
+//d del préstamo, monto, cuotas y número de cuenta de destino
 
-    private String name;
-    private String account;
-    private Double amount;
-    private Integer payment;
+    long id;
+    String monto;
+    int cuotas;
+    String cuentaDestino;
+    String loanName;
 
-    public LoanApplicationDTO() {
+    //{id:selectLoan[0].id, monto:this.monto, cuotas:this.cuotasASolicitar,cuentaDestino:this.cuentaDestino }
+
+    public LoanApplicationDTO(Long id,String name, String monto, int cuotas, String cuentaDestino ){
+        this.id=id;
+        this.loanName=name;
+        this.monto=monto;
+        this.cuotas=cuotas;
+        this.cuentaDestino=cuentaDestino;
+
     }
 
-    public LoanApplicationDTO(String name, String account, Double amount, Integer payment) {
-        this.name = name;
-        this.account = account;
-        this.amount = amount;
-        this.payment = payment;
+    public long getId() {
+        return id;
     }
 
-    public String getName() {
-        return name;
+    public String getMonto() {
+        return monto;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public int getCuotas() {
+        return cuotas;
     }
 
-    public String getAccount() {
-        return account;
+    public String getLoanName(){
+        return this.loanName;
     }
 
-    public void setAccount(String account) {
-        this.account = account;
+    public String getCuentaDestino() {
+        return cuentaDestino;
     }
 
-    public Double getAmount() {
-        return amount;
+    public void setLoanId(Long loanId) {
+        this.id = loanId;
     }
 
-    public void setAmount(Double amount) {
-        this.amount = amount;
+    public void setMonto(String monto) {
+        this.monto = monto;
     }
 
-    public Integer getPayment() {
-        return payment;
+    public void setCuotas(int cuotas) {
+        this.cuotas = cuotas;
     }
 
-    public void setPayment(Integer payment) {
-        this.payment = payment;
+    public void setCuentaDestino(String cuentaDestino) {
+        this.cuentaDestino = cuentaDestino;
+    }
+
+    public void setLoanName(String name){
+        this.loanName=name;
     }
 }

@@ -2,7 +2,7 @@ package com.mindhub.homebanking;
 
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
-import org.hibernate.annotations.CreationTimestamp;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -10,115 +10,185 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
 public class HomebankingApplication {
 
+	public static void main(String[] args) {
+		SpringApplication.run(HomebankingApplication.class);
+	}
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	public static void main(String[] args) {
-		SpringApplication.run(HomebankingApplication.class, args);
-	}
-
-
 	@Bean
-	public CommandLineRunner initData (ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository) {
+	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionsRepository transactionsRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository) {
 		return (args) -> {
-			Client melba = new Client("Melba", "Morel", "melba@mindhub.com","melbita");
-			melba.setPassword(passwordEncoder.encode(melba.getPassword()));
-			clientRepository.save(melba);
-			Client ana = new Client("Ana", "Rios", "arios@mindhub.com", "anuchi");
-			ana.setPassword(passwordEncoder.encode(ana.getPassword()));
-			clientRepository.save(ana);
-			Client admin = new Client("admin", "admin", "admin@admin", "admin");
+
+			// save a couple of clients
+			Client client1 = new Client("Melba", "Morel","melba@mindhub.com","melbita");
+			Client client2 = new Client("Ana", "Rios","arios@mindhub.com","anuchi");
+			Client client3 = new Client("Rosa","Mosqueta","rosa@mosqueta.com","rosita");
+
+			//Creo un admin
+			Client admin = new Client("admin","admin","admin@admin","admin");
+
+
+			client1.setPassword(passwordEncoder.encode(client1.getPassword()));
+			client2.setPassword(passwordEncoder.encode(client2.getPassword()));
+			client3.setPassword(passwordEncoder.encode(client3.getPassword()));
 			admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+
+			clientRepository.save(client1);
+			clientRepository.save(client2);
+			clientRepository.save(client3);
 			clientRepository.save(admin);
 
+			Account account1 = new Account(LocalDateTime.now(),5000.0,"VIN001");
+			account1.setAccountType(AccountType.CAJA_AHORRO);
+			Account account2 = new Account(LocalDateTime.now().plusDays(1),7500.0,"VIN002");
+			account2.setAccountType(AccountType.CAJA_AHORRO);
+			Account account3 = new Account(LocalDateTime.now(), 15000,"VIN003");
+			account3.setAccountType(AccountType.CUENTA_CORRIENTE);
+			Account account4 = new Account(LocalDateTime.now(),2000,"VIN004");
+			account4.setAccountType(AccountType.CUENTA_CORRIENTE);
+			Account account5 = new Account(LocalDateTime.now(),150000,"VIN005");
+			account5.setAccountType(AccountType.CAJA_AHORRO);
 
-			LocalDateTime today = LocalDateTime.now();
-			LocalDateTime tomorrow = today.plusDays(1);
+			account1.setClient(client1);
+			account2.setClient(client1);
+			account3.setClient(client2);
+			account4.setClient(client2);
+			account5.setClient(client1);
 
-			Account vin001 = new Account("vin001", today, 496700.0, melba, true);
-			Account vin002 = new Account("vin002", tomorrow, 1606500.0, melba, true);
 
-			accountRepository.save(vin001);
-			accountRepository.save(vin002);
+			client1.addAccount(account1);
+			client1.addAccount(account2);
+			client1.addAccount(account5);
+			client2.addAccount(account3);
+			client2.addAccount(account4);
 
-			Account vin003 = new Account("vin003", today, 7000000.0, ana, true);
-			Account vin004 = new Account("vin004", tomorrow, 30005000.0, ana, true);
 
-			accountRepository.save(vin003);
-			accountRepository.save(vin004);
+			Transaction transaction1 = new Transaction(TransactionType.CREDITO,12359,"Haberes de Abril",LocalDateTime.now().minusDays(5));
+			Transaction transaction7 = new Transaction(TransactionType.CREDITO,12359,"Transferencia de Elon",LocalDateTime.now().minusDays(1));
+			Transaction transaction4=new Transaction(TransactionType.DEBITO,528,"Colegio BACS",LocalDateTime.now());
+			Transaction transaction2 = new Transaction(TransactionType.CREDITO,65050,"Haberes de Mayo",LocalDateTime.now());
+			Transaction transaction3= new Transaction(TransactionType.DEBITO,1026,"Systems Inc.",LocalDateTime.now());
+			Transaction transaction5= new Transaction(TransactionType.DEBITO,842.59,"Merchandising Cia.",LocalDateTime.now());
+			Transaction transaction6= new Transaction(TransactionType.CREDITO,1843,"Machuca Enterprise",LocalDateTime.now());
+			Transaction transaction8 = new Transaction(TransactionType.CREDITO,2000,"Dinero SRL",LocalDateTime.now().minusDays(3));
+			Transaction transaction9 = new Transaction(TransactionType.CREDITO,1000,"Google",LocalDateTime.now().minusDays(2));
 
-			Transaction trans1 = new Transaction("trans1", tomorrow,TransactionType.DEBIT, 5000.0, "Shell Autoservicio", vin001);
-			transactionRepository.save(trans1);
-			Transaction trans2 = new Transaction("trans2", today,TransactionType.CREDIT, 200.0, "Transferencia", vin001);
-			transactionRepository.save(trans2);
-			Transaction trans3 = new Transaction("trans3", today.minusDays((long) 1),TransactionType.DEBIT, 3500.0, "Farmacity", vin001);
-			transactionRepository.save(trans3);
-			Transaction trans4 = new Transaction("trans4", today.minusDays((long) 2),TransactionType.DEBIT, 5000.0, "Transferencia", vin001);
-			transactionRepository.save(trans4);
-			Transaction trans5 = new Transaction("trans5", today.minusDays((long) 3),TransactionType.CREDIT, 500000.0, "Haberes", vin001);
-			transactionRepository.save(trans5);
+			account1.addTransaction(transaction1);
+			account1.addTransaction(transaction4);
+			account1.addTransaction(transaction5);
+			account1.addTransaction(transaction6);
+			account1.addTransaction(transaction7);
+			account1.addTransaction(transaction8);
+			account1.addTransaction(transaction9);
+			account3.addTransaction(transaction3);
+			account3.addTransaction(transaction2);
 
-			Transaction trans6 = new Transaction("trans6", tomorrow,TransactionType.CREDIT, 50000.0, "Big Business", vin002);
-			transactionRepository.save(trans6);
-			Transaction trans7 = new Transaction("trans7", today.minusDays((long) 2),TransactionType.CREDIT, 20000.0, "Transferencia", vin002);
-			transactionRepository.save(trans7);
-			Transaction trans8 = new Transaction("trans8", today.minusDays((long) 3),TransactionType.DEBIT, 13500.0, "Day School", vin002);
-			transactionRepository.save(trans8);
-			Transaction trans9 = new Transaction("trans9", today.minusDays((long) 4),TransactionType.DEBIT, 50000.0, "Transferencia", vin002);
-			transactionRepository.save(trans9);
+			//Creacion de las listas de cuotas, y posterior adicion de diferentes cantidad de cuotas para cada prestamo
+			List<Integer> cuotasHipotecario= new ArrayList<>();
+			List<Integer> cuotasPersonal= new ArrayList<>();
+			List<Integer> cuotasAutomotriz= new ArrayList<>();
+			cuotasHipotecario.add(12);
+			cuotasHipotecario.add(24);
+			cuotasHipotecario.add(36);
+			cuotasHipotecario.add(48);
+			cuotasHipotecario.add(60);
 
-			Transaction trans11 = new Transaction("trans11", tomorrow,TransactionType.DEBIT, 5000.0, "Beauty SPA", vin003);
-			transactionRepository.save(trans11);
-			Transaction trans12 = new Transaction("trans12", today,TransactionType.CREDIT, 200.0, "Transferencia", vin004);
-			transactionRepository.save(trans12);
-			Transaction trans13 = new Transaction("trans13", today.minusDays((long) 1),TransactionType.DEBIT, 3500.0, "Clinica Covid", vin004);
-			transactionRepository.save(trans13);
+			cuotasPersonal.add(6);
+			cuotasPersonal.add(12);
+			cuotasPersonal.add(24);
 
-			Loan hipo = new Loan("Hipotecario", 500000.0, List.of(12,24,36,48,60));
-			loanRepository.save(hipo);
-			Loan pers = new Loan("Personal", 100000.0, List.of(6,12,24));
-			loanRepository.save(pers);
-			Loan automot = new Loan("Automotriz", 300000.0, List.of(6,12,24,36));
-			loanRepository.save(automot);
+			cuotasAutomotriz.add(6);
+			cuotasAutomotriz.add(12);
+			cuotasAutomotriz.add(24);
+			cuotasAutomotriz.add(36);
 
-			ClientLoan hipo1 = new ClientLoan(60,400000.0, melba,hipo);
-			clientLoanRepository.save(hipo1);
-			ClientLoan pers1 = new ClientLoan(12,50000,melba,pers);
-			clientLoanRepository.save(pers1);
+			Loan loanHipotecario=new Loan("Hipotecario",500000,cuotasHipotecario);
+			loanHipotecario.setInterest(0.2);
+			Loan loanPersonal=new Loan("Personal",100000,cuotasPersonal);
+			loanPersonal.setInterest(0.2);
+			Loan loanAutomotriz=new Loan("Automotriz",300000,cuotasAutomotriz);
+			loanAutomotriz.setInterest(0.2);
 
-			ClientLoan pers2 = new ClientLoan(24,10000,ana,pers);
-			clientLoanRepository.save(pers2);
-			ClientLoan automot1 = new ClientLoan(36,20000,ana,automot);
-			clientLoanRepository.save(automot1);
+			ClientLoan clientLoan1=new ClientLoan(400000,60, client1,loanHipotecario);
+			ClientLoan clientLoan2=new ClientLoan(50000,12,client1,loanAutomotriz);
 
-			LocalDate hoy = LocalDate.now();
+			loanHipotecario.addClientLoan(clientLoan1);
 
-			Card card1 = new Card(melba.getFirstName()+" "+melba.getLastName(), 2548,896,hoy,hoy.plusYears((long) 5),CardColor.GOLD,CardType.DEBIT,melba, true);
+			clientLoan2.setLoan(loanPersonal);
+			loanPersonal.addClientLoan(clientLoan2);
+
+			//Préstamos de Melba Morel
+			client1.addClientLoan(clientLoan1);
+			client1.addClientLoan(clientLoan2);
+
+			//Préstamos para Ana Rios y Rosa Mosqueta
+			ClientLoan clientLoan3=new ClientLoan(100000,24);
+			ClientLoan clientLoan4= new ClientLoan(2000000,36);
+			clientLoan3.setLoan(loanPersonal);
+			loanPersonal.addClientLoan(clientLoan3);
+
+			clientLoan4.setLoan(loanAutomotriz);
+			loanPersonal.addClientLoan(clientLoan4);
+
+			client2.addClientLoan(clientLoan3);
+			client2.addClientLoan(clientLoan4);
+
+			accountRepository.save(account1);
+			accountRepository.save(account2);
+			accountRepository.save(account3);
+			accountRepository.save(account4);
+			accountRepository.save(account5);
+
+			transactionsRepository.save(transaction1);
+			transactionsRepository.save(transaction2);
+			transactionsRepository.save(transaction3);
+			transactionsRepository.save(transaction4);
+			transactionsRepository.save(transaction5);
+			transactionsRepository.save(transaction6);
+			transactionsRepository.save(transaction7);
+			transactionsRepository.save(transaction8);
+			transactionsRepository.save(transaction9);
+
+			accountRepository.save(account1);
+			accountRepository.save(account2);
+			accountRepository.save(account3);
+			accountRepository.save(account4);
+			accountRepository.save(account5);
+
+			loanRepository.save(loanHipotecario);
+			loanRepository.save(loanPersonal);
+			loanRepository.save(loanAutomotriz);
+
+			clientLoanRepository.save(clientLoan1);
+			clientLoanRepository.save(clientLoan2);
+			clientLoanRepository.save(clientLoan3);
+			clientLoanRepository.save(clientLoan4);
+
+
+			//Tarjetas de Melba Morel
+			Card card1 = new Card("4523 6859 2458 0184 3409",554,LocalDateTime.now().plusYears(5), LocalDateTime.now(),CardType.DEBIT,CardColor.GOLD,client1,true);
+			Card card2 = new Card("4896 4561 1234 4895",487, LocalDateTime.now(), LocalDateTime.now(),CardType.CREDIT,CardColor.TITANIUM,client1,true );
+			Card card4 = new Card("4879 5874 9876 5678",248, LocalDateTime.now().plusYears(5), LocalDateTime.now(),CardType.CREDIT,CardColor.SILVER,client1,true );
+
+			//Ana Rios
+			Card card3 = new Card("4879 2546 1234 5678",546, LocalDateTime.now(), LocalDateTime.now().minusDays((long) 2),CardType.CREDIT,CardColor.TITANIUM,client2,true );
+
 			cardRepository.save(card1);
-			Card card2 = new Card(melba.getFirstName()+" "+melba.getLastName(),3658,654,hoy,LocalDate.parse("2028-01-28"),CardColor.TITANIUM,CardType.CREDIT,melba, true);
 			cardRepository.save(card2);
-			Card card3 = new Card(ana.getFirstName()+" "+ana.getLastName(),8956,784,hoy,hoy.plusYears((long) 10),CardColor.TITANIUM,CardType.CREDIT,ana, true);
 			cardRepository.save(card3);
-
-			//System.out.println(clientRepository.findByEmail("melba@mindhub.com").getAccounts().size());
+			cardRepository.save(card4);
 
 			System.out.println(":-D");
 			System.out.println("Tranquila Ana, he compilado bien!");
-			/*int minNum = 100;
-			int maxNum = 999;
-			int numRandom (minNum, maxNum) {
-				return (int) ((Math.random() * (minNum - maxNum) + minNum));
-			}
-			System.out.println(numRandom);*/
-
 		};
 	}
-
 }

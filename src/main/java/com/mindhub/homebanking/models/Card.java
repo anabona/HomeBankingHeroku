@@ -3,43 +3,67 @@ package com.mindhub.homebanking.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
+
 public class Card {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
+
     private long id;
-
     private String cardHolder;
-    private int number;
-    private int cvv;
-    private LocalDate fromDate;
-    private LocalDate thruDate;
-    private CardColor color;
-    private CardType type;
-    private boolean status;
+    private String number;
+    private Integer cvv;
+    private LocalDateTime expireDateFrom;
+    private LocalDateTime expireDateThru;
+    private CardColor cardColor;
+    private CardType cardType;
+    private Boolean esActiva;
 
-
+    // Declaro la relacion Muchos a uno, quiere decir que muchas tarjetas pueden pertenecer a un Cliente
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn (name = "client_id")
+    @JoinColumn(name = "card_holder_id")
     private Client client;
 
-    public Card() {
-    }
+    public Card() {}
 
-    public Card(String cardHolder, int number, int cvv, LocalDate fromDate, LocalDate thruDate, CardColor color, CardType type, Client client, Boolean status) {
-        this.cardHolder = cardHolder;
+    public Card( String number, Integer cvv, LocalDateTime expireDateThru, LocalDateTime expireDateFrom, CardType cardType, CardColor cardColor, Client client, Boolean activada) {
+        this.cardHolder = client.getFirstName()+" "+client.getLastName();
         this.number = number;
         this.cvv = cvv;
-        this.fromDate = fromDate;
-        this.thruDate = thruDate;
-        this.color = color;
-        this.type = type;
+        this.expireDateFrom = expireDateFrom;
+        this.expireDateThru = expireDateThru;
+        this.cardColor = cardColor;
+        this.cardType = cardType;
+        this.esActiva=activada;
         this.client = client;
-        this.status = status;
+        client.addCard(this);
 
+    }
+
+    public Card(String number, Integer cvv, LocalDateTime expireDateThru, LocalDateTime expireDateFrom, CardType cardType, CardColor cardColor, Client client) {
+
+        //Concateno el nombre y el apellido para el cardHolder
+        this.cardHolder = client.getFirstName()+" "+client.getLastName();
+        this.number = number;
+        this.cvv = cvv;
+        this.expireDateFrom = expireDateFrom;
+        this.expireDateThru = expireDateThru;
+        this.cardColor = cardColor;
+        this.cardType = cardType;
+        this.client = client;
+        client.addCard(this);
+    }
+
+    public Boolean getActivada() {
+        return esActiva;
+    }
+
+    public void setActivada(Boolean activada) {
+        this.esActiva = activada;
     }
 
     public long getId() {
@@ -50,71 +74,63 @@ public class Card {
         return cardHolder;
     }
 
-    public void setCardHolder(String cardHolder) {
-        this.cardHolder = cardHolder;
-    }
-
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
-    public int getCvv() {
+    public Integer getCvv() {
         return cvv;
     }
 
-    public void setCvv(int cvv) {
-        this.cvv = cvv;
+    public LocalDateTime getExpireDateFrom() {
+        return expireDateFrom;
     }
 
-    public LocalDate getFromDate() {
-        return fromDate;
+    public LocalDateTime getExpireDateThru() {
+        return expireDateThru;
     }
 
-    public void setFromDate(LocalDate fromDate) {
-        this.fromDate = fromDate;
+    public CardColor getCardColor() {
+        return cardColor;
     }
 
-    public LocalDate getThruDate() {
-        return thruDate;
-    }
-
-    public void setThruDate(LocalDate thruDate) {
-        this.thruDate = thruDate;
-    }
-
-    public CardColor getColor() {
-        return color;
-    }
-
-    public void setColor(CardColor color) {
-        this.color = color;
-    }
-
-    public CardType getType() {
-        return type;
-    }
-
-    public void setType(CardType type) {
-        this.type = type;
+    public CardType getCardType() {
+        return cardType;
     }
 
     public Client getClient() {
         return client;
     }
 
+    public void setCardHolder(String cardHolder) {
+        this.cardHolder = cardHolder;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public void setCvv(Integer cvv) {
+        this.cvv = cvv;
+    }
+
+    public void setExpireDateFrom(LocalDateTime expireDateFrom) {
+        this.expireDateFrom = expireDateFrom;
+    }
+
+    public void setExpireDateThru(LocalDateTime expireDateThru) {
+        this.expireDateThru = expireDateThru;
+    }
+
+    public void setCardColor(CardColor cardColor) {
+        this.cardColor = cardColor;
+    }
+
+    public void setCardType(CardType cardType) {
+        this.cardType = cardType;
+    }
+
     public void setClient(Client client) {
         this.client = client;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
     }
 }

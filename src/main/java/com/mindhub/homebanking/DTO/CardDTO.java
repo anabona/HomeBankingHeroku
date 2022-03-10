@@ -4,32 +4,30 @@ import com.mindhub.homebanking.models.Card;
 import com.mindhub.homebanking.models.CardColor;
 import com.mindhub.homebanking.models.CardType;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class CardDTO {
+
     private long id;
     private String cardHolder;
-    private int number;
-    private int cvv;
-    private LocalDate fromDate;
-    private LocalDate thruDate;
-    private CardColor color;
-    private CardType type;
-    private boolean status;
-
-    public CardDTO() {
-    }
+    private String number;
+    private Integer cvv;
+    private LocalDateTime FromDate;
+    private LocalDateTime ThruDate;
+    private CardColor cardColor;
+    private CardType cardType;
+    private Boolean esActiva;
 
     public CardDTO(Card card) {
-        this.id = card.getId();
-        this.cardHolder = card.getCardHolder();
-        this.number = card.getNumber();
-        this.cvv = card.getCvv();
-        this.fromDate = card.getFromDate();
-        this.thruDate = card.getThruDate();
-        this.color = card.getColor();
-        this.type = card.getType();
-        this.status = card.isStatus();
+        this.id=card.getId();
+        this.cardHolder= card.getCardHolder();
+        this.cardType=card.getCardType();
+        this.cardColor=card.getCardColor();
+        this.number=card.getNumber();
+        this.cvv=card.getCvv();
+        this.FromDate=card.getExpireDateFrom();
+        this.ThruDate=card.getExpireDateThru();
+        this.esActiva=card.getActivada();
     }
 
     public long getId() {
@@ -40,63 +38,29 @@ public class CardDTO {
         return cardHolder;
     }
 
-    public void setCardHolder(String cardHolder) {
-        this.cardHolder = cardHolder;
-    }
-
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
-    public int getCvv() {
+    public Integer getCvv() {
         return cvv;
     }
 
-    public void setCvv(int cvv) {
-        this.cvv = cvv;
+    public LocalDateTime getFromDate() {
+        return FromDate;
     }
 
-    public LocalDate getFromDate() {
-        return fromDate;
+    public LocalDateTime getThruDate() {
+        return ThruDate;
     }
 
-    public void setFromDate(LocalDate fromDate) {
-        this.fromDate = fromDate;
+    public CardColor getCardColor() {
+        return cardColor;
     }
 
-    public LocalDate getThruDate() {
-        return thruDate;
+    public CardType getCardType() {
+        return cardType;
     }
 
-    public void setThruDate(LocalDate thruDate) {
-        this.thruDate = thruDate;
-    }
-
-    public CardColor getColor() {
-        return color;
-    }
-
-    public void setColor(CardColor color) {
-        this.color = color;
-    }
-
-    public CardType getType() {
-        return type;
-    }
-
-    public void setType(CardType type) {
-        this.type = type;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
+    public Boolean getEsActiva(){return this.esActiva;}
 }

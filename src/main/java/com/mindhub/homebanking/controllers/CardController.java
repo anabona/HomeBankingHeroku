@@ -1,58 +1,64 @@
 package com.mindhub.homebanking.controllers;
 
-import com.mindhub.homebanking.models.*;
+import com.mindhub.homebanking.extra.Utilities;
+import com.mindhub.homebanking.models.Card;
+import com.mindhub.homebanking.models.CardColor;
+import com.mindhub.homebanking.models.CardType;
+import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.CardRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
-import com.mindhub.homebanking.utils.CardUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @RestController
-@RequestMapping ("/api")
+@RequestMapping("/api")
 public class CardController {
+
     @Autowired
     ClientRepository clientRepository;
 
     @Autowired
     CardRepository cardRepository;
 
-   @PostMapping("/clients/current/cards")
-    public ResponseEntity<Object> register(Authentication authentication,
-            @RequestParam String color, @RequestParam String type) {
-        Client clientCurrent = clientRepository.findByEmail(authentication.getName());
+    @PostMapping("/clients/current/cards")
+    public ResponseEntity<Object> createCard(Authentication authentication, @RequestParam String color, @RequestParam String tipo){
 
-        if((clientCurrent.getCards().size()<3)){
+        CardColor colorTarjeta = CardColor.valueOf(color);
+        CardType tipoTarjeta = CardType.valueOf(tipo);
+
+        //Declaro un objeto utilities para acceder a las funcionalidades de creacion de numeros de tarjetas al azar, necesarios para crear las tarjetas
+        Utilities utilities = new Utilities();
+
+        //Obtengo el cliente que está logeado para consultarle por la tarjeta
+        Client currentClient = clientRepository.findByEmail(authentication.getName());
+
+        if( currentClient.getCards().stream().filter(tarjeta->
+        {
+            boolean b = tarjeta.getCardType().toString().equals(tipo.toString()) && tarjeta.getActivada();
+            return b;
+        }).count()>2){
+            return new ResponseEntity<>("El cliente ya posee 3 tarjetas del mismo tipo", HttpStatus.FORBIDDEN);
         }
-       int numeroRandom = CardUtils.getCardNumber();
-       int numeroRandomCvv = CardUtils.getCVV();
 
-       Card cardNew = cardRepository.save(
-                new Card(clientCurrent.getFirstName() +" " + clientCurrent.getLastName(), numeroRandom, numeroRandomCvv,
-                        LocalDate.now(), LocalDate.now().plusYears((long) 5), CardColor.valueOf(color), CardType.valueOf(type),clientCurrent, true));
-                return new ResponseEntity<>("Successfully card creation!",HttpStatus.CREATED);
+        Card newCard = new Card(utilities.getRandomCardNumber(), utilities.getRandomCVV(), LocalDateTime.now().plusYears(5), LocalDateTime.now(),tipoTarjeta, colorTarjeta, clientRepository.findByEmail(authentication.getName()),true);
+        cardRepository.save(newCard);
+        return new ResponseEntity<>("201 Tarjeta creada correctamente",HttpStatus.CREATED);
     }
 
-   @PatchMapping("/clients/current/cards/delete/{id}")
-    public ResponseEntity<Object> deleteCard(@PathVariable Long id, @RequestParam Boolean status) {
-       Card deleteCard = cardRepository.findById(id).orElse(null);
-       deleteCard.setStatus(status);
-       cardRepository.save(deleteCard);
-       return new ResponseEntity<>("200 Tarjeta Eliminada", HttpStatus.OK);
-    }
-
-   /* @PatchMapping("/clients/delete/card")
-    public ResponseEntity<Object> deleteCard(@RequestParam String cardNumber) {
+    //Metodo para borrar una tarjeta, que en realidad cambia una variable boolean que dice si está activa o no, para que aparezca comno si estuviera borrada pero sigue estando en la BD
+    @PatchMapping("clients/delete/card")
+    public ResponseEntity<Object> deleteCard(@RequestParam String cardNumber){
         System.out.println(cardNumber);
-        Card card = cardRepository.findByNumber(cardNumber);
-        card.status(false);
+        Card card=cardRepository.findByNumber(cardNumber);
+        card.setActivada(false);
 
-        cardRepository.save(ca)
-    }*/
+        cardRepository.save(card);
+        return new ResponseEntity<>("201 Tarjeta eliminada correctamente",HttpStatus.CREATED);
+    }
 
 }

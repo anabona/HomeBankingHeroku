@@ -1,10 +1,7 @@
 package com.mindhub.homebanking.models;
-
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,81 +10,88 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-    private long id;
 
-    private String name;
-    private LocalDateTime creationDate = LocalDateTime.now();
+    private long id;
     private TransactionType type;
     private double amount;
     private String description;
+    private LocalDateTime date;
 
+    // Declaro la relacion Muchos a uno, quiere decir que una cuenta puede de una a muchas transacciones
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "account_id")
+    //Le agrego una fila a la base de datos de transacciones, que se va a llamar accounnt_id, el cual es un identificador unico para la cuenta
+    @JoinColumn(name = "account_owner_id")
     private Account account;
 
     public Transaction() {
     }
 
-    public Transaction(String name, LocalDateTime creationDate, TransactionType type, double amount, String description, Account account) {
-        this.name = name;
-        this.creationDate = creationDate;
+    public Transaction(long id, TransactionType type, double amount, String description, LocalDateTime date, Account account) {
+        this.id = id;
         this.type = type;
         this.amount = amount;
         this.description = description;
+        this.date = date;
         this.account = account;
     }
 
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public TransactionType getType() {
-        return type;
-    }
-
-    public void setType(TransactionType type) {
+    public Transaction(TransactionType type, double amount, String description, LocalDateTime date, Account account) {
         this.type = type;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
         this.amount = amount;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
+        this.date = date;
         this.account = account;
+    }
+
+    public Transaction(TransactionType type, double amount, String description, LocalDateTime date) {
+        this.type = type;
+        this.amount = amount;
+        this.description = description;
+        this.date = date;
     }
 
     public long getId() {
         return id;
     }
 
+    public TransactionType getType() {
+        return type;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setType(TransactionType type) {
+        this.type = type;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
 }

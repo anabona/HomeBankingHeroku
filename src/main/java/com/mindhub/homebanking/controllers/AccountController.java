@@ -1,15 +1,14 @@
 package com.mindhub.homebanking.controllers;
-
-import antlr.Utils;
-import com.mindhub.homebanking.DTO.AccountDTO;
 import com.mindhub.homebanking.DTO.ClientDTO;
+import com.mindhub.homebanking.models.CardColor;
+import com.mindhub.homebanking.DTO.AccountDTO;
+import com.mindhub.homebanking.extra.Utilities;
 import com.mindhub.homebanking.models.Account;
-import com.mindhub.homebanking.models.Card;
+import com.mindhub.homebanking.models.AccountType;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -17,60 +16,62 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
-@RequestMapping(path = "/api")
+@RequestMapping("/api")
 public class AccountController {
+    @Autowired
+    AccountRepository accountRepository;
 
     @Autowired
-    private AccountRepository accountRepository;
+    ClientRepository clientRepository;
 
-    @Autowired
-    private ClientRepository clientRepository;
-
+    //Servicio que devuelve todas las cuentas del repositorio
     @GetMapping("/accounts")
-    public List<AccountDTO> getAccounts() {
-        return accountRepository.findAll().stream().map(AccountDTO::new).collect(Collectors.toList());
+    public List<AccountDTO> getAccounts(){
+        return accountRepository.findAll().stream().map(AccountDTO::new).collect(toList());
     }
 
-    @GetMapping("/clients/current/accounts")
-    public Set<AccountDTO> getAccounts(Authentication authentication) {
-        ClientDTO clientDTO = new ClientDTO(clientRepository.findByEmail(authentication.getName()));
-        Set<AccountDTO> accounts = clientDTO.getAccounts();
-        return accounts;
+    //Servicio que devuelve un accountDTO de acuerdo a un ID pasado por parámetro
+    @RequestMapping("/accounts/{id}")
+    public AccountDTO getAccount(@PathVariable long id){
+        return accountRepository.findById(id).map(AccountDTO::new).orElse(null);
     }
 
-    @GetMapping("/accounts/{number}")
-    public AccountDTO getAccount(@PathVariable String number) {
-        AccountDTO accountDTO = new AccountDTO(accountRepository.findByNumber(number));
-        return  accountDTO;
+    //Servicio que devuelve el nombre del titular de una cuenta en especifico, de acuerdo al numero de cuenta pasado por parametro al path
+    @RequestMapping("/account/{accountNumber}")
+    public String getNombreTitularCuenta(@PathVariable String accountNumber){
+        Account cuenta = accountRepository.findByNumber(accountNumber);
+        return cuenta.getClient().getFirstName()+" "+cuenta.getClient().getLastName();
     }
 
-
-    @PostMapping(path = "/clients/current/accounts")
-    public ResponseEntity<Object> creator(Authentication authentication) {
-        Client clientCurrent = clientRepository.findByEmail(authentication.getName());
-        if (clientCurrent.getAccounts().size() > 2) {
-            return new ResponseEntity<>("Ya tienes 3 cuentas", HttpStatus.FORBIDDEN);
+    //Servicio que crea una cuenta nueva para el usuario autenticado, permite crear un máximo de 3 cuentas
+    @PostMapping("/clients/current/accounts")
+    public ResponseEntity<Object> createAccount(@RequestParam String tipoCuenta,Authentication authentication){
+        AccountType accountType=AccountType.valueOf(tipoCuenta);
+        Utilities utilities =new Utilities();
+        Client currentClient =  clientRepository.findByEmail(authentication.getName());
+        //Corroboro que el cliente tenga menos de 3 cuentas, si tiene 3 cuentas, no permitirá realizar la operación
+        if (currentClient.getAccounts().size() > 2){
+            return new ResponseEntity<>("El cliente ya posee 3 cuentas", HttpStatus.FORBIDDEN);
         }
 
-        int numeroRandom = (int) (Math.random() * (99999999 - 10000000 + 1) + 10000000);
-        Account nuevaCuenta = new Account("VIN-" + numeroRandom, LocalDateTime.now(), 0.00, clientCurrent, true);
-        accountRepository.save(nuevaCuenta);
+        //Creo una nueva cuenta con balance 0
+        Account newAccount= new Account( LocalDateTime.now(),0, utilities.getRandomAccountNumber(), currentClient,accountType);
+        currentClient.addAccount(newAccount);
+        accountRepository.save(newAccount);
 
-        return new ResponseEntity<>("201 Creada", HttpStatus.CREATED);
+        return new ResponseEntity<>("200 Cuenta creada correctamente",HttpStatus.CREATED);
     }
-    @PatchMapping("/clients/current/accounts/delete/{id}")
-    public ResponseEntity<Object> deleteAccount(@PathVariable Long id) {
-        Account deleteAccount = accountRepository.findById(id).orElse(null);
-        deleteAccount.setStatus((false));
-        accountRepository.save(deleteAccount);
-        return new ResponseEntity<>("201 Cuenta Eliminada", HttpStatus.CREATED);
+
+    //Servicio que elimina la cuenta del usuario actual, eliminando primero todas las transacciones de la cuenta para luego eliminar la cuenta
+    @DeleteMapping("/clients/current/accounts")
+    public ResponseEntity<Object> deleteAccount(Authentication authentication){
+        return new ResponseEntity<>("200 Cuenta borrada con éxito",HttpStatus.CREATED);
     }
+
 }
-
-
 
 

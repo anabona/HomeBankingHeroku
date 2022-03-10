@@ -20,30 +20,49 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/rest/**").hasAuthority("ADMIN")
-                .antMatchers("/h2-console").hasAuthority("ADMIN")
 
-                .antMatchers("/web/account.html").hasAuthority("CLIENT")
-                .antMatchers("/web/accounts.html").hasAuthority("CLIENT")
-                .antMatchers("/web/current/**").hasAuthority("CLIENT")
-                .antMatchers("/web/cards2.html").hasAuthority("CLIENT")
-                .antMatchers("/web/transaction.html").hasAuthority("CLIENT")
-                .antMatchers("/web/transactions.html").hasAuthority("CLIENT")
-//                .antMatchers("/web/js/**").hasAuthority("CLIENT")
-                .antMatchers(HttpMethod.POST, "/api/login").permitAll()
-                .antMatchers("/web/index.html").permitAll()
-                .antMatchers("/web/login.html").permitAll()
-                .antMatchers("/web/styles/style.css").permitAll()
-                .antMatchers("/img/**").permitAll()
-                .antMatchers("/api/**").permitAll()
-                .antMatchers("/clients/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/**").permitAll()
-                .antMatchers(HttpMethod.PUT, "/api/**").permitAll()
-                .antMatchers(HttpMethod.PATCH, "/api/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/**").permitAll()
-                .antMatchers(HttpMethod.PUT, "/**").permitAll()
-                .antMatchers(HttpMethod.PATCH, "/**").permitAll()
-                .antMatchers("/**").permitAll();
+                .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
+
+                //Permisos para el ADMIN
+                .antMatchers("/rest/**").hasAuthority("ADMIN")
+                .antMatchers("/api/**").hasAuthority("ADMIN")
+                .antMatchers("/manager.html").hasAuthority("ADMIN")
+                .antMatchers("/manager_addLoan.html").hasAuthority("ADMIN")
+                .antMatchers("/h2-console/**").hasAuthority("ADMIN")
+
+
+                //Permisos para el CLIENT
+                .antMatchers(HttpMethod.POST, "/api/clients/current/accounts").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST, "/api/clients/current").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST, "/api/transaction").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST, "/api/**").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.GET,"/api/loans").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.GET,"/api/**").hasAuthority("CLIENT")
+
+                .antMatchers("/api/**").hasAuthority("CLIENT")
+                .antMatchers("/accounts.html").hasAuthority("CLIENT")
+                .antMatchers("/account.html").hasAuthority("CLIENT")
+                .antMatchers("/cards.html").hasAuthority("CLIENT")
+                .antMatchers("/404.html").hasAuthority("CLIENT")
+                .antMatchers("/criptomonedas.html").hasAuthority("CLIENT")
+                .antMatchers("/ayuda.html").hasAuthority("CLIENT")
+                .antMatchers("/terminos_de_uso.html").hasAuthority("CLIENT")
+                .antMatchers("/create-cards.html").hasAuthority("CLIENT")
+                .antMatchers("/transfers.html").hasAuthority("CLIENT")
+                .antMatchers("/loan_application.html").hasAuthority("CLIENT")
+                .antMatchers("/payment_service.html").hasAuthority("CLIENT")
+                .antMatchers("/payment.html").hasAuthority("CLIENT")
+
+
+
+                //Permisos para TODOS
+                .antMatchers("/index.html").permitAll()
+                .antMatchers("/inicio_sesion.html").permitAll()
+                .antMatchers("/crear_usuario.html").permitAll();
+
+
+
+
 
         http.formLogin()
                 .usernameParameter("email")

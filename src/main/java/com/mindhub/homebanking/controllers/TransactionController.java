@@ -1,112 +1,72 @@
 package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.models.Account;
-import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.models.Transaction;
 import com.mindhub.homebanking.models.TransactionType;
 import com.mindhub.homebanking.repositories.AccountRepository;
-import com.mindhub.homebanking.repositories.ClientRepository;
-import com.mindhub.homebanking.repositories.TransactionRepository;
+import com.mindhub.homebanking.repositories.TransactionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api")
 public class TransactionController {
-    @Autowired
-    TransactionRepository transactionRepository;
-
-    @Autowired
-    ClientRepository clientRepository;
 
     @Autowired
     AccountRepository accountRepository;
 
+    @Autowired
+    TransactionsRepository transactionsRepository;
+
     @Transactional
-    @PostMapping("/transactions")
-    public ResponseEntity<Object> doTransaction(
-            @RequestParam String originAccountNumber,
-            @RequestParam String destinyAccountNumber,
-            @RequestParam String strAmount,
-            @RequestParam String description) {
-
+    @PostMapping("/transaction")
+    public ResponseEntity<Object> doTransaction(@RequestParam String originAccountNumber, @RequestParam String destinyAccountNumber, @RequestParam String strAmount, @RequestParam String description){
         double amount = Double.parseDouble(strAmount);
-
+        // Busco las cuentas origen y destino en el repositorio
         Account originAccount = accountRepository.findByNumber(originAccountNumber);
         Account destinyAccount = accountRepository.findByNumber(destinyAccountNumber);
 
-     if (originAccountNumber.equals("") || destinyAccountNumber.equals("") ||
-             amount == 0 || description.equals("")) {
-                return new ResponseEntity<>("There are no enough information", HttpStatus.FORBIDDEN);
-     };
+        if (!originAccountNumber.equals("") || !destinyAccountNumber.equals("") || amount !=0 || !description.equals("")){
+            if (destinyAccount!=null){
+                if (!originAccountNumber.equals(destinyAccountNumber)){// si la cuenta de origen no es igual a la cuenta destino
+                    if (originAccount.getBalance()>amount){
 
-     if (destinyAccount == null) {
-         return new ResponseEntity<>("The destiny account is invalid", HttpStatus.FORBIDDEN);
-     }
+                        String destinyDescription = description + " - " +originAccount.getClient().getFirstName()+" " + originAccount.getClient().getLastName();
+                        String originDescription=description+" - a: " +destinyAccount.getClient().getFirstName()+" "+destinyAccount.getClient().getLastName();
 
-     if (originAccountNumber.equals(destinyAccountNumber)) {
-         return new ResponseEntity<>("Both accounts are the same", HttpStatus.FORBIDDEN);
-     }
+                        Transaction transactionCredit = new Transaction(TransactionType.CREDITO, amount,destinyDescription, LocalDateTime.now(), destinyAccount);
+                        Transaction transactionDebit = new Transaction(TransactionType.DEBITO, amount,originDescription, LocalDateTime.now(), originAccount);
 
-     if (originAccount.getBalance() < amount) {
-         return new ResponseEntity<>("Amount under Account balance", HttpStatus.FORBIDDEN);
-     }
+                        originAccount.addTransaction(transactionDebit);
+                        destinyAccount.addTransaction(transactionCredit);
 
-        String destinyDescription = description + " - " +
-                originAccount.getClient().getFirstName() + " " +
-                originAccount.getClient().getLastName();
-
-        String originDescription = description + " - a: " +
-                destinyAccount.getClient().getFirstName() + " " +
-                destinyAccount.getClient().getLastName();
-
-        Transaction transactionCredit = new Transaction("Transferencia1", LocalDateTime.now(), TransactionType.CREDIT,
-                amount, destinyDescription, destinyAccount);
-        transactionRepository.save(transactionCredit);
-
-        Transaction transactionDebit = new Transaction("Transferencia1", LocalDateTime.now(), TransactionType.DEBIT,
-                amount, originDescription, originAccount);
-        transactionRepository.save(transactionDebit);
-
-        originAccount.addTransaction(transactionCredit);
-        originAccount.addTransaction(transactionDebit);
-
-        double creditAmount = destinyAccount.getBalance() - amount;
-        double debitAmount = destinyAccount.getBalance() + amount;
-
-        destinyAccount.setBalance(creditAmount);
-        destinyAccount.setBalance(debitAmount);
-
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
+                        transactionsRepository.save(transactionCredit);
+                        transactionsRepository.save(transactionDebit);
+                        return new ResponseEntity<>(HttpStatus.CREATED);
+                    }
+                    else
+                    {
+                        return new ResponseEntity<>("Dinero insuficiente para realizar la transacción", HttpStatus.FORBIDDEN);
 
                     }
+                }
+                else{
+                    return new ResponseEntity<>(" Cuenta de origen igual a cuenta de destino ", HttpStatus.FORBIDDEN);
+                }
+            }else{
+                return new ResponseEntity<>("No existe la cuenta destino ", HttpStatus.FORBIDDEN);
+            }
+        }else{
+            return new ResponseEntity<>("No se puede realizar la transacción por falta de datos ", HttpStatus.FORBIDDEN);
+        }
+
+
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}

@@ -1,115 +1,126 @@
 package com.mindhub.homebanking.models;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+
 @Entity
 public class Account {
+
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO, generator = "native")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
+
     private long id;
 
+    private LocalDateTime  creationDate;
+    private double balance;
     private String number;
-    private LocalDateTime creationDateTime = LocalDateTime.now();
-    private Double balance;
-    public boolean status;
+    private AccountType accountType;
 
-    @ManyToOne (fetch = FetchType.EAGER)
-    @JoinColumn (name = "client_id")
+    // Declaro la relacion Uno a Muchos, quiere decir que una cuenta va a tener una o muchas transacciones
+    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
+    Set<Transaction> transactions=new HashSet<>();
+
+    // Declaro la relacion Muchos a uno, quiere decir que un cliente puede tener más de una cuenta
+    @ManyToOne(fetch = FetchType.EAGER)
+    //Le agrego una fila a la base de datos de cuentas, que se va a llamar owner_id, el cual es un identificador unico para el dueño de la cuenta
+    @JoinColumn(name = "owner_id")
     private Client client;
 
-    @OneToMany (mappedBy = "account", fetch = FetchType.EAGER)
-    Set<Transaction> transactions = new HashSet<>();
+    //Constructores
+    public Account() {}
 
-    public Account() {
+    public Account(long id, LocalDateTime creationDate, double balance, String number) {
+        this.id = id;
+        this.creationDate = creationDate;
+        this.balance = balance;
+        this.number = number;
     }
 
-    public Account(String number, LocalDateTime creationDate, Double balance, Client client, boolean status) {
-        this.number = number;
-        this.creationDateTime = creationDateTime;
+    public Account(LocalDateTime creationDate, double balance, String number) {
+        this.creationDate = creationDate;
         this.balance = balance;
-        this.client = client;
-        this.status = status;
+        this.number = number;
+    }
+
+    public Account(LocalDateTime creationDate,double balance, String number, Client client){
+        this.creationDate = creationDate;
+        this.balance = balance;
+        this.number = number;
+        this.client=client;
+    }
+
+    public Account(LocalDateTime creationDate,double balance, String number, Client client, AccountType accountType){
+        this.creationDate = creationDate;
+        this.balance = balance;
+        this.number = number;
+        this.client=client;
+        this.accountType=accountType;
+    }
+
+
+    //Metodos gets y Sets
+
+    public AccountType getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(AccountType accountType) {
+        this.accountType = accountType;
     }
 
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public double getBalance() {
+        return balance;
     }
 
     public String getNumber() {
         return number;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public LocalDateTime getCreationDate() {
-        return creationDateTime;
-    }
-
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDateTime = creationDate;
-    }
-
-    public Double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(Double balance) {
-        this.balance = balance;
-    }
-
-    public Client getClient() {
-        return client;
-    }
+    public Client getClient() { return client; }
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 
     public Set<Transaction> getTransactions() {
         return transactions;
     }
 
-    public void setTransactions(Set<Transaction> transactions) {
-        this.transactions = transactions;
+    // Hago un método para agregar una transaccion a la lista de transacciones de la cuenta, si es CREDITO aumento el balance, si es DEBITO resto al balance.
+    public void addTransaction(Transaction transaction){
+        if(transaction.getType().equals(TransactionType.DEBITO)){
+            if (transaction.getAmount()<this.balance){
+                this.balance=this.balance-transaction.getAmount();
+                this.transactions.add(transaction);
+                transaction.setAccount(this);
+            }else{
+                System.out.println("NO SE PUEDE REALIZAR LA TRANSACCION POR FALTA DE FONDOS");
+            }
+        }
+
+        if (transaction.getType().equals(TransactionType.CREDITO)){
+            this.balance = this.balance+transaction.getAmount();
+            this.transactions.add(transaction);
+            transaction.setAccount(this);
+        }
+
     }
-
-    public LocalDateTime getCreationDateTime() {
-        return creationDateTime;
-    }
-
-    public void setCreationDateTime(LocalDateTime creationDateTime) {
-        this.creationDateTime = creationDateTime;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    public void addTransaction (Transaction transaction){
-        if (getTransactions().equals(TransactionType.CREDIT)) {
-            balance = transaction.getAmount()+getBalance();
-        };
-
-        if (getTransactions().equals(TransactionType.DEBIT)) {
-            balance = getBalance() - transaction.getAmount();
-        };
-    }
-
 }
