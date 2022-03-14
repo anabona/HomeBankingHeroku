@@ -25,13 +25,11 @@
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />  -->
 
-    <title>Cards</title>
+    <title>Tus tarjetas</title>
 </head>
 
 <body>
-    <div class="loader_bg">
-        <div class="loader"></div>
-    </div>
+    
     <main>
 
         <div class="principal">
@@ -39,10 +37,8 @@
             <div class="sidebar active">
                 <div class="logo_content">
                     <div class="logo">
-                        <img src="img/logo_blanco_freebanking.png" class="img_logo">
-                        <div class="logo_name"> Freebanking</div>
                     </div>
-                    <i class='bx bx-menu' id="boton"></i>
+                   
                 </div>
                 <ul class="nav_list">
 
@@ -51,98 +47,48 @@
                             <i class='bx bxs-home bx-tada-hover'></i>
                             <span class="links_name">Inicio</span>
                         </a>
-                        <span class="tooltip">Inicio</span>
+                        
                     </li>
-
+                    <li>
+                        <a href="cards.html">
+                            <i class='bx bx-credit-card bx-tada-hover'></i>
+                            <span class="links_name">Tus tarjetas</span>
+                        </a>
+                        </li>
                     <li>
                         <a href="transfers.html">
                             <i class='bx bx-transfer bx-tada-hover'></i>
                             <span class="links_name">Transferencias</span>
                         </a>
-                        <span class="tooltip">Transferencias</span>
-                    </li>
-
-                    <li>
-                        <a href="payment.html">
-                            <i class='bx bx-wallet bx-tada-hover'></i>
-                            <span class="links_name">Realizar Pago</span>
-                        </a>
-                        <span class="tooltip">Realizar Pago</span>
-                    </li>
-
-                    <li>
-                        <a href="404.html">
-                            <i class='bx bxs-bank bx-tada-hover'></i>
-                            <span class="links_name">Inversiones</span>
-                        </a>
-                        <span class="tooltip">Inversiones</span>
-                    </li>
+                        </li>
                     <li>
                         <a href="loan_application.html">
                             <i class='bx bx-money-withdraw bx-tada-hover'></i>
-                            <span class="links_name">Prestamos</span>
+                            <span class="links_name">Préstamos</span>
                         </a>
-                        <span class="tooltip">Prestamos</span>
+                        
                     </li>
                     <li>
-                        <a href="#">
-                            <i class='bx bx-credit-card bx-tada-hover'></i>
-                            <span class="links_name">Tus tarjetas</span>
+                        <a href="payment.html">
+                            <i class='bx bx-wallet bx-tada-hover'></i>
+                            <span class="links_name">Pagos</span>
                         </a>
-                        <span class="tooltip">Tus tarjetas</span>
-                    </li>
-
-                    <li>
-                        <a href="criptomonedas.html">
-                            <i class='bx bxl-bitcoin bx-tada-hover'></i>
-                            <span class="links_name">Critpmonedas</span>
-                        </a>
-                        <span class="tooltip">Cripto</span>
-                    </li>
-                    <li>
-                        <a href="ayuda.html">
-                            <i class='bx bx-help-circle bx-tada-hover'></i>
-                            <span class="links_name">Ayuda</span>
-                        </a>
-                        <span class="tooltip">Ayuda</span>
-                    </li>
-                    <li>
-                        <a href="terminos_de_uso.html">
-                            <i class='bx bx-cog icon bx-tada-hover'></i>
-                            <span class="links_name">Terminos de uso</span>
-                        </a>
-                        <span class="tooltip"> Terminos </span>
+                        
                     </li>
                 </ul>
-                <div class="profile_content">
-                    <div class="profile">
-                        <div class="profile_details">
-                            <div class="name_job" id="sesion">
-                                <button v-on:click="cerrarSesion()"><i class='bx bx-log-out' id="log_out"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
 
             <div id="main-information">
                 <div id="accounts">
-                    <div id="header">
-                        <h1> Hola, {{capitalizeWord(cliente)}} !! </h1>
-                        <!-- DROPDOWN MENU que se despliega al posarte sobra la inicial del cliente -->
-                        <div class="dropdown">
-                            <button class="dropbtn" id="circulo_nombre">
-                                <p>{{toUpper(cliente[0])}}</p>
-                            </button>
-                            <div class="dropdown-content">
-                                <a href="#" class="dropdown_item"><i class='bx bxs-edit'></i>Configuracion</a>
-                                <a href="#" class="dropdown_item"><i class='bx bx-user'></i>Perfil</a>
-                                <hr>
-                                <a href="#"> <button v-on:click="cerrarSesion()" class="logout_button dropdown_item"><i
-                                            class='bx bx-log-out'></i> Logout</button></a>
-                            </div>
+                    <div class="d-flex " id="header">
+                        <div class="cabeceraCards">
+                            <h1 class="saludoCliente"> Bienvenid@, {{capitalizeWord(cliente)}}! </h1>
+                            <a class="botonlogOut" href="#"> <button v-on:click="cerrarSesion()"
+                                    class="logout_button dropdown_item"><i class='bx bx-log-out'></i>
+                                    Logout</button></a>
                         </div>
-                    </div>
+                   </div>
                 </div>
                 <hr>
                 <div id="credit_cards">
@@ -162,9 +108,9 @@
                                                 <!--<img src="img/cards_Image/map.png" class="map-img">-->
                                                 <img src="img/cards_Image/golden_Card.webp" class="map-img">
                                                 <div class="fila">
-                                                    <img src="img/cards_Image/chip.png" class="img_logos">
-                                                    <img src="img/FREEBANKING.png" class="img_freebanking">
-                                                    <img src="img/cards_Image/visa.png" class="img_logos">
+                                                    <img src="./img/chip.jpg" class="img_logos">
+                                                    <img src="#" class="img">
+                                                    <img src="./img/Logo-Visa.jpg" class="img_logos">
                                                 </div>
                                                 <div class="fila card-no">
                                                     <p>{{cut(card.number,0,4)}}</p>
@@ -186,18 +132,18 @@
                                                 <div class="barra"></div>
                                                 <div class="fila cvv_tarjeta">
                                                     <div>
-                                                        <img src="img/cards_Image/pattern.png">
+                                                        <img src="./img/patern.jpg">
                                                     </div>
                                                     <p id="cvv_tarjeta_p"> {{card.cvv}} </p>
                                                 </div>
                                                 <div class="fila texo_tarjeta">
-                                                    <p>Esta es una tarjeta virtual diseñada por Freebanking
+                                                    <p>Esta es una tarjeta virtual diseñada por Yes! Bank 
                                                         exclusivamente.
                                                     </p>
                                                 </div>
                                                 <div class="fila firma">
                                                     <p>CUSTOMER SIGNATURE</p>
-                                                    <img src="img/cards_Image/visa.png" class="img_freebanking">
+                                                    <img src="./img/Logo-Visa.jpg" class="visa">
                                                 </div>
                                             </div>
                                         </div>
@@ -218,7 +164,7 @@
 
                                                 <div class="fila">
                                                     <img src="img/cards_Image/chip.png" class="img_logos">
-                                                    <img src="img/FREEBANKING.png" class="img_freebanking">
+                                                    <img src="img/bank.png" class="img_bank">
                                                     <img src="img/cards_Image/visa.png" class="img_logos">
                                                 </div>
                                                 <div class="fila card-no">
@@ -246,13 +192,13 @@
                                                     <p id="cvv_tarjeta_p"> {{card.cvv}} </p>
                                                 </div>
                                                 <div class="fila texo_tarjeta">
-                                                    <p>Esta es una tarjeta virtual diseñada por Freebanking
+                                                    <p>Esta es una tarjeta virtual diseñada por Yes! Bank 
                                                         exclusivamente.
                                                     </p>
                                                 </div>
                                                 <div class="fila firma">
                                                     <p>CUSTOMER SIGNATURE</p>
-                                                    <img src="img/cards_Image/visa.png" class="img_freebanking">
+                                                    <img src="img/cards_Image/visa.png" class="imgbanking">
                                                 </div>
                                             </div>
                                         </div>
@@ -273,7 +219,7 @@
 
                                                 <div class="fila">
                                                     <img src="img/cards_Image/chip.png" class="img_logos">
-                                                    <img src="img/FREEBANKING.png" class="img_freebanking">
+                                                    <img src="img/BANK.png" class="imgbanking">
                                                     <img src="img/cards_Image/visa.png" class="img_logos">
                                                 </div>
                                                 <div class="fila card-no">
@@ -300,13 +246,13 @@
                                                     <p id="cvv_tarjeta_p"> {{card.cvv}} </p>
                                                 </div>
                                                 <div class="fila texo_tarjeta">
-                                                    <p>Esta es una tarjeta virtual diseñada por Freebanking
+                                                    <p>Esta es una tarjeta virtual diseñada por Yes! Bank
                                                         exclusivamente.
                                                     </p>
                                                 </div>
                                                 <div class="fila firma">
                                                     <p>CUSTOMER SIGNATURE</p>
-                                                    <img src="img/cards_Image/visa.png" class="img_freebanking">
+                                                    <img src="img/cards_Image/visa.png" class="img_banking">
                                                 </div>
                                             </div>
                                         </div>
@@ -337,7 +283,7 @@
                                                 <img src="img/cards_Image/golden_Card.webp" class="map-img">
                                                 <div class="fila">
                                                     <img src="img/cards_Image/chip.png" class="img_logos">
-                                                    <img src="img/FREEBANKING.png" class="img_freebanking">
+                                                    <img src="img/Bank.png" class="imgbanking">
                                                     <img src="img/cards_Image/visa.png" class="img_logos">
                                                 </div>
                                                 <div class="fila card-no">
@@ -365,13 +311,13 @@
                                                     <p id="cvv_tarjeta_p"> {{card.cvv}} </p>
                                                 </div>
                                                 <div class="fila texo_tarjeta">
-                                                    <p>Esta es una tarjeta virtual diseñada por Freebanking
+                                                    <p>Esta es una tarjeta virtual diseñada por Yes! Bank
                                                         exclusivamente.
                                                     </p>
                                                 </div>
                                                 <div class="fila firma">
                                                     <p>CUSTOMER SIGNATURE</p>
-                                                    <img src="img/cards_Image/visa.png" class="img_freebanking">
+                                                    <img src="img/cards_Image/visa.png" class="image Bank">
                                                 </div>
                                             </div>
                                         </div>
@@ -392,7 +338,7 @@
 
                                                 <div class="fila">
                                                     <img src="img/cards_Image/chip.png" class="img_logos">
-                                                    <img src="img/FREEBANKING.png" class="img_freebanking">
+                                                    <img src="img/Bank.png" class="imgbanking">
                                                     <img src="img/cards_Image/visa.png" class="img_logos">
                                                 </div>
                                                 <div class="fila card-no">
@@ -420,13 +366,13 @@
                                                     <p id="cvv_tarjeta_p"> {{card.cvv}} </p>
                                                 </div>
                                                 <div class="fila texo_tarjeta">
-                                                    <p>Esta es una tarjeta virtual diseñada por Freebanking
+                                                    <p>Esta es una tarjeta virtual diseñada por Yes! Bank
                                                         exclusivamente.
                                                     </p>
                                                 </div>
                                                 <div class="fila firma">
                                                     <p>CUSTOMER SIGNATURE</p>
-                                                    <img src="img/cards_Image/visa.png" class="img_freebanking">
+                                                    <img src="img/cards_Image/visa.png" class="img_bank">
                                                 </div>
                                             </div>
                                         </div>
@@ -447,7 +393,7 @@
 
                                                 <div class="fila">
                                                     <img src="img/cards_Image/chip.png" class="img_logos">
-                                                    <img src="img/FREEBANKING.png" class="img_freebanking">
+                                                    <img src="img/bank.png" class="img_bank">
                                                     <img src="img/cards_Image/visa.png" class="img_logos">
                                                 </div>
                                                 <div class="fila card-no">
@@ -474,13 +420,13 @@
                                                     <p id="cvv_tarjeta_p"> {{card.cvv}} </p>
                                                 </div>
                                                 <div class="fila texo_tarjeta">
-                                                    <p>Esta es una tarjeta virtual diseñada por Freebanking
+                                                    <p>Esta es una tarjeta virtual diseñada por Yes! Bank
                                                         exclusivamente.
                                                     </p>
                                                 </div>
                                                 <div class="fila firma">
                                                     <p>CUSTOMER SIGNATURE</p>
-                                                    <img src="img/cards_Image/visa.png" class="img_freebanking">
+                                                    <img src="img/cards_Image/visa.png" class="img_bank">
                                                 </div>
                                             </div>
                                         </div>

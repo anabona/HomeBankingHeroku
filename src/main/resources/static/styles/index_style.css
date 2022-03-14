@@ -11,6 +11,18 @@
 
 }
 
+.tituloLogin{
+    
+    padding: 2rem;
+    margin-bottom: -10vh;
+    color: aliceblue;
+    background: linear-gradient(70deg, rgb(1, 41, 114), white);
+}
+
+.logoBank{
+    margin-top: -6vh;
+    margin-left: 70vw;
+}
 
 h1, h2, p {
     /* font-family: 'Bebas Neue', cursive; */
@@ -26,8 +38,16 @@ body {
 }
 
 .principal {
-    width: 100%;
+    width: 50%;
     height: 100vh;
+    margin-left: 4rem;
+}
+
+.imagenLogin{
+width: 45%;
+height: 100%;
+margin-left: 50%;
+margin-top: -65rem;
 }
 
 .container_login {
@@ -37,6 +57,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: -6rem;
 
 
 }
@@ -50,7 +71,8 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 15px;
+    margin-top: 0rem;
+    padding-top: 0px;
 }
 
 .signin {
@@ -107,7 +129,7 @@ body {
     max-width: 400px;
     position: relative;
     overflow: hidden;
-    padding-top: 20px;
+    padding-top: 5px;
 }
 
 .form input{
@@ -213,4 +235,11 @@ body {
     padding: 5px 15px;
     background: linear-gradient(to left, #004e92, #000428); 
 
+}
+
+footer {
+    margin-top: -10rem;
+    padding: 30px 200px;
+
+    background-color: rgb(197, 193, 193);
 }

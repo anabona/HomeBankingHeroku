@@ -28,14 +28,12 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
-    <title>Account</title>
+    <title>Detalle de tu cuenta</title>
 </head>
 
 <body>
 
-    <div class="loader_bg">
-        <div class="loader"></div>
-    </div>
+    
 
     <main>
 
@@ -44,10 +42,8 @@
             <div class="sidebar active">
                 <div class="logo_content">
                     <div class="logo">
-                        <img src="img/logo_blanco_freebanking.png" class="img_logo">
-                        <div class="logo_name"> Freebanking</div>
                     </div>
-                    <i class='bx bx-menu' id="boton"></i>
+                   
                 </div>
                 <ul class="nav_list">
 
@@ -56,91 +52,47 @@
                             <i class='bx bxs-home bx-tada-hover'></i>
                             <span class="links_name">Inicio</span>
                         </a>
-                        <span class="tooltip">Inicio</span>
-                    </li>
-                   
-                    <li>
-                        <a href="transfers.html">
-                            <i class='bx bx-transfer bx-tada-hover'></i>
-                            <span class="links_name">Transferencias</span>
-                        </a>
-                        <span class="tooltip">Transferencias</span>
-                    </li>
-                    
-                    <li>
-                        <a href="payment.html">
-                            <i class='bx bx-wallet bx-tada-hover'></i>
-                            <span class="links_name">Realizar Pago</span>
-                        </a>
-                        <span class="tooltip">Realizar Pago</span>
-                    </li>
-
-                    <li>
-                        <a href="#">
-                            <i class='bx bxs-bank bx-tada-hover'></i>
-                            <span class="links_name">Inversiones</span>
-                        </a>
-                        <span class="tooltip">Inversiones</span>
-                    </li>
-                    <li>
-                        <a href="loan_application.html">
-                            <i class='bx bx-money-withdraw bx-tada-hover'></i>
-                            <span class="links_name">Prestamos</span>
-                        </a>
-                        <span class="tooltip">Prestamos</span>
+                        
                     </li>
                     <li>
                         <a href="cards.html">
                             <i class='bx bx-credit-card bx-tada-hover'></i>
                             <span class="links_name">Tus tarjetas</span>
                         </a>
-                        <span class="tooltip">Tus tarjetas</span>
-                    </li>
-
+                        </li>
                     <li>
-                        <a href="criptomonedas.html">
-                            <i class='bx bxl-bitcoin bx-tada-hover'></i>
-                            <span class="links_name">Critpmonedas</span>
+                        <a href="transfers.html">
+                            <i class='bx bx-transfer bx-tada-hover'></i>
+                            <span class="links_name">Transferencias</span>
                         </a>
-                        <span class="tooltip">Cripto</span>
-                    </li>
+                        </li>
                     <li>
-                        <a href="#">
-                            <i class='bx bx-help-circle bx-tada-hover'></i>
-                            <span class="links_name">Ayuda</span>
+                        <a href="loan_application.html">
+                            <i class='bx bx-money-withdraw bx-tada-hover'></i>
+                            <span class="links_name">Préstamos</span>
                         </a>
-                        <span class="tooltip">Ayuda</span>
+                        
                     </li>
                     <li>
-                        <a href="#">
-                            <i class='bx bx-cog icon bx-tada-hover'></i>
-                            <span class="links_name">Terminos de uso</span>
+                        <a href="payment.html">
+                            <i class='bx bx-wallet bx-tada-hover'></i>
+                            <span class="links_name">Pagos</span>
                         </a>
-                        <span class="tooltip"> Terminos </span>
+                        
                     </li>
                 </ul>
-                
-            </div>
 
+            </div>
             <div id="main-information" class="d-flex flex-column">
                 <div id="accounts">
-                    <div class="d-flex " id="header">
-                        <h1 v-cloak> Bienvenido, {{capitalizeWord(cliente)}}!! </h1>
-
-                        <!-- DROPDOWN MENU que se despliega al posarte sobra la inicial del cliente -->
-                        <div class="dropdown">
-                            <button class="dropbtn" id="circulo_nombre">
-                                <p v-cloak>{{toUpper(cliente[0])}}</p>
-                            </button>
-                            <div class="dropdown-content">
-                                <a href="#" class="dropdown_item"><i class='bx bxs-edit'></i>Configuracion</a>
-                                <a href="#" class="dropdown_item"><i class='bx bx-user'></i>Perfil</a>
-                                <hr>
-                                <a href="#"> <button v-on:click="cerrarSesion()" class="logout_button dropdown_item"><i
-                                            class='bx bx-log-out'></i> Logout</button></a>
-                            </div>
-                        </div>
-
+                    <div class="d-flex " class="cabeceraAccounts2">
+                        <h1 v-cloak> Bienvenid@, {{capitalizeWord(cliente)}}!! </h1>                       
+                            <div class="cabeceraAccounts">
+                                <h1 class="saludoCliente"> Bienvenid@, {{capitalizeWord(cliente)}}! </h1>
+                                <a class="botonlogOut" href="#"> <button v-on:click="cerrarSesion()"
+                                        class="logout_button dropdown_item"><i class='bx bx-log-out'></i>
+                                        Logout</button></a>
+                                </div>
                     </div>
                 </div>
 
@@ -153,8 +105,7 @@
                         <table class="table table-dark table-hover">
                             <thead>
                                 <tr class="text-white">
-                                    <th> </th>
-                                    <!-- <th>Tipo</th> -->
+                                    <th>Tipo</th>
                                     <th>Monto</th>
                                     <th>Descripción</th>
                                     <th> Fecha</th>
@@ -163,18 +114,20 @@
                             <tbody>
                                 <tr v-for="transaction in ordenarTransacciones">
                                     <template v-if="transaction.type === 'DEBITO'">
-                                        <td class="table-danger"><span class="iconify"
-                                                data-icon="uil:money-withdraw"></span></span></td>
+                                        <!-- <td class="table-danger"><span class="iconify" -->
+                                                <!-- data-icon="uil:money-withdraw"></span></span></td> -->
                                         <!-- <td class="table-danger"> {{transaction.type}} </td> -->
+                                        <td class="table-danger" v-cloak>{{transaction.type}}</td>
                                         <td class="table-danger" v-cloak> -$ {{transaction.amount}} </td>
                                         <td class="table-danger" v-cloak> {{transaction.description}} </td>
                                         <td class="table-danger" v-cloak> {{transaction.date.substring(0,10)}}</td>
                                     </template>
                                     <template v-if="transaction.type === 'CREDITO'">
-                                        <td class="table-success"><span class="iconify"
+                                        <!-- <td class="table-success"><span class="iconify"
                                                 data-icon="uil:money-insert"></span>
-                                        </td>
+                                        </td> -->
                                         <!-- <td class="table-success"> {{transaction.type}} </td> -->
+                                        <td class="table-success" v-cloak> {{transaction.type}} </td>
                                         <td class="table-success" v-cloak> $ {{transaction.amount}} </td>
                                         <td class="table-success" v-cloak> {{transaction.description}} </td>
                                         <td class="table-success" v-cloak> {{transaction.date.substring(0,10)}}</td>
@@ -191,7 +144,7 @@
                     </template>
                 </div>
 
-                <div id="pdfGenerator" class="d-flex flex-column">
+                <!-- <div id="pdfGenerator" class="d-flex flex-column">
                     <h2>Filtrar transacciones por fecha</h2>
                     <div>
                         <label for="fechaDesde"> Desde</label>
@@ -206,7 +159,7 @@
                         <a href="accounts.html" class="btn btn-account"> VOLVER ATRÁS </a>
                     </div>
 
-                </div>
+                </div> -->
 
             </div>
 

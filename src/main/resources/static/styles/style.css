@@ -9,7 +9,7 @@
 
 
 }
-/********PROPIEDADES DEL PRELOADER***********/
+/*
 .loader_bg{
     position: fixed;  
     top: 0px;
@@ -56,8 +56,68 @@
         opacity: 0;
     }
 }
+ */
 
-/**********************************/
+.cabeceraAccounts{
+    background-image: url(../img/homebankingalargado.jpg);
+    margin-left: -57rem;
+    width: 70vw;
+    height: 30vh;
+    margin-top: -1.5rem;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.cabeceraLoans{
+    background-image: url(../img/business\ men.jpg);
+    margin-left: -57rem;
+    width: 70vw;
+    height: 40vh;
+    margin-top: -1.5rem;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#loan{
+    width: 75%;
+}
+
+
+.cabeceraCards{
+    background-image: url(../img/imagen\ para\ tarjeta\ de\ credito.jpg);
+    margin-left: -57rem;
+    width: 70vw;
+    height: 30vh;
+    margin-top: -1.5rem;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.boxCrearTarjetas{
+    width: 60%;
+}
+
+.cabeceraAccounts2{
+    background-image: url(../img/homebankingalargado.jpg);
+    margin-left: 20rem;
+    width: 70vw;
+    height: 30vh;
+    margin-top: -1.5rem;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.saludoCliente{
+    text-align: right;
+    margin-right: 3rem;
+}
+
+.botonlogOut{
+    margin-left: 60vw;
+    font-size: 30px;
+    height: 30vh;
+}
 
 [v-cloak] {
     display: none
@@ -68,7 +128,7 @@ h2, h3 {
 }
 
 body {
-    background-color: lightgrey;
+    background-color: whitesmoke
 }
 
 #user_icon {
@@ -94,6 +154,24 @@ body {
     align-items: center;
     display: flex;
 }
+
+.headerAccount {
+
+    background: none;
+    /* fallback for old browsers */
+    /*background: -webkit-linear-gradient(to left, #004e92, #000428);   Chrome 10-25, Safari 5.1-6 */
+    /*background: linear-gradient(to left, #004e92, #000428);  W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    width: 100%;
+    height: auto;
+    padding-left: 10px;
+    font-family: 'Oswald', sans-serif;
+    padding-left: 75%;
+    align-items: center;
+    display: flex;
+}
+
+
 
 #header div p {
     font-size: 30px;
@@ -142,7 +220,11 @@ a {
 
 footer {
     text-align: center;
-    margin-top: 440px;
+    margin-top: 75vh;
+    padding: 30px 200px;
+
+    background-color: rgb(197, 193, 193);
+    position:sticky;
 }
 
 #main-information {
@@ -163,14 +245,23 @@ footer {
 /*********************************************/
 /******************SIDEBAR *******************/
 
-/* .logo{
-    width: 150px;
-    height: 150px;
+ /* .logo{
+    width:600px;
+    height: 200px;
     margin: 15px 50px;
-} */
+}  */
+
+.logo_content{
+    height: 20vh;
+    width: 100%;
+    background-image: url("../img/logo2.png");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
 
 .sidebar {
-    width: 300px;
+    width: 100px;
     height: 100vh;
 
     background: #000428;
@@ -222,53 +313,106 @@ footer {
     padding-left: 0;
 }
 
-/*********************************************/
-/************Info Cards Clients***************/
 
 .info_cards_client {
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 8px 16px 0 rgb(0 0 0 / 10%);
     padding: 20px 5px 20px 0px;
-    margin: 10px;
+    border-radius: 15px;
+    width: 45vw;
+    padding: 10px;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 2px;
+
+
+}
+
+
+
+.cardAccount1{
+margin-left: 1rem;
+font-size: 15px;
+
+}
+
+.info_cards_client1{
+    margin-left: -4rem;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 8px 16px 0 rgb(0 0 0 / 10%);
+    padding: 20px 5px 20px 0px;
+    border-radius: 15px;
+    width: 45vw;
+    padding: 10px;
+    margin-top: 10px;
+    margin-right: 10px;
+    box-shadow: -8px 8px 10px blue;
+}
+
+.info_cards_client2{
+    margin-left: -4rem;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 8px 16px 0 rgb(0 0 0 / 10%);
+    padding: 20px 5px 20px 0px;
+    border-radius: 15px;
+    width: 45vw;
+    padding: 10px;
+    margin-top: 10px;
+    margin-right: 10px;
+    box-shadow: -8px 8px 10px blue;
+    z-index: 2;
+}
+
+.boxNuevaCuenta{
+    width: 30vw;
 }
 
 .fila_cuentas_encabezado{
     font-family: 'Poppins', sans-serif;
-    font-size: 25px;
+    font-size: 18px;
     font-weight: 600;
     display: flex;
 }
 
 .primer_elemento_encabezado{
     padding-left: 0px;
-    width:300px;
+    width:150px;
+    margin-right: 2rem;
+}
+
+.primer_elemento_encabezadoPrestamos{
+    padding-left: 0px;
+    width:80px;
+    margin-right: 2rem;
 }
 
 .ultimo_elemento_encabezado{
     padding-right: 0px;
-    width:250px;
+    width:150px;
 }
 
 .elemento_fila_prestamos{
-    width:350px;
+    width: 200px;
     text-align: center;
 }
 
 .elemento_fila_cuentas{
-    width:400px;
+    width:150px;
     text-align: center;
 }
 
 .elemento_fila_cuenta_saldo{
     font-size: 25px;
-    font-weight: 600;
+    font-weight: 400;
     color: #004e92;
 }
 
 .elemento_saldo_loan{
     font-size: 25px;
-    font-weight: 600;
+    font-weight: 400;
     color: rgb(173, 23, 23);
 }
 
@@ -279,8 +423,8 @@ footer {
 
 .fila_cuentas{
     font-family: 'Poppins', sans-serif;
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 15px;
+    font-weight: 400;
     display: flex;
     color: grey;
     /* padding-left: 5px; */
@@ -300,7 +444,8 @@ footer {
 }
 
 .btn-nueva-cuenta{
-    margin-left: 10px;
+    margin-left: 30vw;
+    margin-top: -69vh;
 }
 
 .btn-nuevo-prestamo{
@@ -372,14 +517,14 @@ footer {
 /*********************************************/
 /************Table Accounts***************/
 
-#account {
+/* #account {
     z-index: -1;
 }
 
 .table {
     width: 50%;
 }
-
+ */
 /*********************************************/
 /************404***************/
 #workingOnIt {
@@ -406,15 +551,15 @@ footer {
 
 /*******************  NAV BAR  **************************/
 
-#circulo_nombre {
+/* #circulo_nombre {
     width: 55px;
     height: 55px;
     background: linear-gradient(to left, #004e92, #000428);
-    /*W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+*/
+    /*W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+
     border-radius: 50%;
     text-align: left;
 
-}
+} */
 
 .dropbtn {
     font-size: 25px;
