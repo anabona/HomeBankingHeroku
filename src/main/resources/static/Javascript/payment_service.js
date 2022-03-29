@@ -15,10 +15,8 @@ let paymentService = new Vue({
       this.loadData();
       const valores = window.location.search;
 
-      //Creamos la instancia
       const urlParams = new URLSearchParams(valores);
 
-      //Accedemos al id
       this.monto = urlParams.get('monto');
       this.descripcion = urlParams.get('descripcion');
       console.log(this.monto);
@@ -31,11 +29,9 @@ let paymentService = new Vue({
                   paymentService.cuentas = response.data.accounts;
               })
               .catch(function (error) {
-                  // handle error
                   console.log(error);
               })
               .then(function () {
-                  // always executed
               });
       },
 
@@ -52,7 +48,6 @@ let paymentService = new Vue({
               .catch(function (error) {
                   if (error.response) {
                       console.log("ENTRA AL ERROR");
-                      // Con el catch atajo el error del response
                       Swal.fire({
                           icon: 'error',
                           text: error.response.data,
@@ -64,7 +59,6 @@ let paymentService = new Vue({
                   } else if (error.request) {
                       console.log(error.request);
                   } else {
-                      // Something happened in setting up the request that triggered an Error
                       console.log('Error', error.message);
                   }
                   console.log(error.config);

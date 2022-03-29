@@ -22,17 +22,13 @@ public class Account {
     private String number;
     private AccountType accountType;
 
-    // Declaro la relacion Uno a Muchos, quiere decir que una cuenta va a tener una o muchas transacciones
     @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
     Set<Transaction> transactions=new HashSet<>();
 
-    // Declaro la relacion Muchos a uno, quiere decir que un cliente puede tener más de una cuenta
     @ManyToOne(fetch = FetchType.EAGER)
-    //Le agrego una fila a la base de datos de cuentas, que se va a llamar owner_id, el cual es un identificador unico para el dueño de la cuenta
     @JoinColumn(name = "owner_id")
     private Client client;
 
-    //Constructores
     public Account() {}
 
     public Account(long id, LocalDateTime creationDate, double balance, String number) {
@@ -63,8 +59,6 @@ public class Account {
         this.accountType=accountType;
     }
 
-
-    //Metodos gets y Sets
 
     public AccountType getAccountType() {
         return accountType;
@@ -104,7 +98,7 @@ public class Account {
         return transactions;
     }
 
-    // Hago un método para agregar una transaccion a la lista de transacciones de la cuenta, si es CREDITO aumento el balance, si es DEBITO resto al balance.
+    //Agrego una transacción a la lista de transacciones de la cuenta, si es CREDITO se suma el monto al balance, si es DEBITO resto al balance.
     public void addTransaction(Transaction transaction){
         if(transaction.getType().equals(TransactionType.DEBITO)){
             if (transaction.getAmount()<this.balance){

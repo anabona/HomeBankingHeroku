@@ -16,10 +16,8 @@ let account = new Vue({
 
       const valores = window.location.search;
 
-      //Creamos la instancia
       const urlParams = new URLSearchParams(valores);
 
-      //Accedemos al id
       var id = urlParams.get('id');
 
       axios.get(`api/accounts/${id}`)
@@ -29,17 +27,14 @@ let account = new Vue({
           console.log(account.cuenta);
         })
         .catch(function (error) {
-          // handle error
           console.log(error);
         })
         .then(function () {
-          // always executed
         });
     },      
   },
 
   computed:{
-    //Ordena las transacciones de manera descendente, la última transacción registrada va al principio
     ordenarTransacciones(){
       var orderArray=account.transactions;
       console.log(orderArray);
@@ -50,7 +45,6 @@ let account = new Vue({
         if (b.id < a.id) {
           return -1;
         }
-        // a must be equal to b
         return 0;
       });
       return orderArray;

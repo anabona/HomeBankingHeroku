@@ -27,14 +27,23 @@ public class TransactionController {
     @PostMapping("/transaction")
     public ResponseEntity<Object> doTransaction(@RequestParam String originAccountNumber, @RequestParam String destinyAccountNumber, @RequestParam String strAmount, @RequestParam String description){
         double amount = Double.parseDouble(strAmount);
-        // Busco las cuentas origen y destino en el repositorio
+
         Account originAccount = accountRepository.findByNumber(originAccountNumber);
         Account destinyAccount = accountRepository.findByNumber(destinyAccountNumber);
 
-        if (!originAccountNumber.equals("") || !destinyAccountNumber.equals("") || amount !=0 || !description.equals("")){
-            if (destinyAccount!=null){
-                if (!originAccountNumber.equals(destinyAccountNumber)){// si la cuenta de origen no es igual a la cuenta destino
-                    if (originAccount.getBalance()>amount){
+        if (!originAccountNumber.equals("") || !destinyAccountNumber.equals("") || amount <=0 || !description.equals("")){
+            return new ResponseEntity<>("No se puede realizar la transacción por falta de datos ", HttpStatus.FORBIDDEN);
+        }
+
+
+        if (destinyAccount!=null){
+            return new ResponseEntity<>("No existe la cuenta destino ", HttpStatus.FORBIDDEN);
+        }
+
+        if (!originAccountNumber.equals(destinyAccountNumber)){
+            return new ResponseEntity<>(" Cuenta de origen igual a cuenta de destino ", HttpStatus.FORBIDDEN);
+        }
+        if (originAccount.getBalance()>amount){
 
                         String destinyDescription = description + " - " +originAccount.getClient().getFirstName()+" " + originAccount.getClient().getLastName();
                         String originDescription=description+" - a: " +destinyAccount.getClient().getFirstName()+" "+destinyAccount.getClient().getLastName();
@@ -54,16 +63,8 @@ public class TransactionController {
                         return new ResponseEntity<>("Dinero insuficiente para realizar la transacción", HttpStatus.FORBIDDEN);
 
                     }
-                }
-                else{
-                    return new ResponseEntity<>(" Cuenta de origen igual a cuenta de destino ", HttpStatus.FORBIDDEN);
-                }
-            }else{
-                return new ResponseEntity<>("No existe la cuenta destino ", HttpStatus.FORBIDDEN);
-            }
-        }else{
-            return new ResponseEntity<>("No se puede realizar la transacción por falta de datos ", HttpStatus.FORBIDDEN);
-        }
+
+
 
 
 

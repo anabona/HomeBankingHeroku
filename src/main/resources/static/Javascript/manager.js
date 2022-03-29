@@ -12,7 +12,6 @@ let app = new Vue({
   },
 
   created() {
-    // Inicializa la variable VUE    
     this.loadData();
   },
 
@@ -26,16 +25,13 @@ let app = new Vue({
           app.json = response;
         })
         .catch(function (error) {
-          // handle error
           console.log(error);
         })
         .then(function () {
-          // always executed
         });
     },
 
     addClient: function () {
-      // En esta funcion cargo los datos a la BD, luego llamo al loadData() para cargar la tabla, y luego reinicializo los valores de las variables q uso para input      
       if (this.newClientName != "" && this.newClientLastName != "" && this.newClientEmail != "" && this.newClientPassword!="") {
         console.log("entra al if"); 
         this.postClient();
@@ -52,7 +48,6 @@ let app = new Vue({
       }
     },
     postClient() {
-      //Este metodo carga a la BD los valores que agrego al input
       axios.post('rest/clients', {
         firstName: this.newClientName,
         lastName: this.newClientLastName,
@@ -68,7 +63,6 @@ let app = new Vue({
        this.loadData(); })
 
     },
-    //Vuelvo a inicializar los valores que uso en los input
     reiniciarValores() {
       this.newClientName = '';
       this.newClientLastName = '';
@@ -100,13 +94,10 @@ let app = new Vue({
       })
 
       
-      //this.loadData();
     }
   }
 });
 
-
-//Llamo al axios.get para traer los datos de la BD
 
 function loadData() {
 
@@ -115,10 +106,8 @@ function loadData() {
       app.clients = response.data._embedded.clients;
     })
     .catch(function (error) {
-      // handle error
       console.log(error);
     })
     .then(function () {
-      // always executed
     });
 }

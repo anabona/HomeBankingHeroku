@@ -16,15 +16,11 @@ public class ClientLoan {
     private double amount;
     Integer payments;
 
-    // Declaro la relacion Muchos a uno, quiere decir que un tipo de prestamo puede lo puede tener mas de un cliente
     @ManyToOne(fetch = FetchType.EAGER)
-    //Le agrego una Columna a la base de datos de ClientLoan
     @JoinColumn(name = "client_id")
     private Client client_owner;
 
-    // Declaro la relacion Muchos a uno, muchos clientes pueden tener el mismo tipo de prestamo
     @ManyToOne(fetch = FetchType.EAGER)
-    //Le agrego una columna a la base de datos de ClientLoan, que se va a llamar loan_id, el cual es un identificador unico para el dueño del prestamo
     @JoinColumn(name = "loan_id")
     private Loan loan_owner;
 

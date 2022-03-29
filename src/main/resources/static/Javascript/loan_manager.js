@@ -24,7 +24,6 @@ let newLoan = new Vue({
           this.montoMaximo="",
           this.nombrePrestamo=""             
       },
-      //Loan(String name, double maxAmount, List<Integer> payments) 
       crearLoan(){
           console.log(this.montoMaximo);
           axios.post("rest/loans", 
@@ -49,7 +48,6 @@ let newLoan = new Vue({
           .catch(function (error) {
               if (error.response) {
                   console.log("ENTRA AL ERROR");
-                  // Con el catch agarro el error del response, eso quiere decir que el email o la contraseña son invalidas, o no encontró el usuario o la contraseña está mal, y lo muestro por pantalla
                   Swal.fire({
                       icon: 'error',
                       text: error.response.data,
@@ -61,7 +59,6 @@ let newLoan = new Vue({
               } else if (error.request) {
                   console.log(error.request);
               } else {
-                  // Something happened in setting up the request that triggered an Error
                   console.log('Error', error.message);
               }
               console.log(error.config);

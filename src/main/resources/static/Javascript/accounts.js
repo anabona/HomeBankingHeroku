@@ -25,11 +25,9 @@ let accounts = new Vue({
           console.log(accounts.loans);
         })
         .catch(function (error) {
-          // handle error
           console.log(error);
         })
         .then(function () {
-          // always executed
         });
     },
     createAccount() {
@@ -54,7 +52,6 @@ let accounts = new Vue({
           });
         })
         .then(function () {
-          // always executed
         });
     },
     toUpper(word) {
@@ -91,7 +88,6 @@ let accounts = new Vue({
     transacciones() {
       let transacciones = [];
       this.cuentas.forEach(cuenta => {
-        //Devuelvo las ultimas 4 transacciones
         cuenta.transactions.forEach(transaction => {
           transacciones.push(transaction);
         });

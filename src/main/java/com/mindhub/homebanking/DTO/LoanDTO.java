@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoanDTO {
-    //Esta clase DTO funciona para mandar los prestamos disponibles para mostrar por pantalla
     private long id;
     private String name;
     private double maxAmount;

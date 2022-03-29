@@ -29,11 +29,9 @@ let loan = new Vue({
                   loan.cuentas = response.data.accounts;         
               })
               .catch(function (error) {
-                  // handle error
                   console.log(error);
               })
               .then(function () {
-                  // always executed
               });
       },
       pedirPrestamo(){

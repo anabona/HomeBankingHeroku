@@ -36,11 +36,11 @@ public class ClientController {
     public ResponseEntity<Object> register(@RequestParam String firstName, @RequestParam String lastName,@RequestParam String email, @RequestParam String password) {
 
         if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Hay datos vacíos", HttpStatus.FORBIDDEN);
         }
 
         if (clientRepository.findByEmail(email) !=  null) {
-            return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("El nombre ya está en uso", HttpStatus.FORBIDDEN);
         }
 
         clientRepository.save(new Client(firstName, lastName, email, passwordEncoder.encode(password)));

@@ -23,15 +23,12 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
 
                 .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
 
-                //Permisos para el ADMIN
                 .antMatchers("/rest/**").hasAuthority("ADMIN")
                 .antMatchers("/api/**").hasAuthority("ADMIN")
                 .antMatchers("/manager.html").hasAuthority("ADMIN")
                 .antMatchers("/manager_addLoan.html").hasAuthority("ADMIN")
                 .antMatchers("/h2-console/**").hasAuthority("ADMIN")
 
-
-                //Permisos para el CLIENT
                 .antMatchers(HttpMethod.POST, "/api/clients/current/accounts").hasAuthority("CLIENT")
                 .antMatchers(HttpMethod.POST, "/api/clients/current").hasAuthority("CLIENT")
                 .antMatchers(HttpMethod.POST, "/api/transaction").hasAuthority("CLIENT")
@@ -43,19 +40,12 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
                 .antMatchers("/accounts.html").hasAuthority("CLIENT")
                 .antMatchers("/account.html").hasAuthority("CLIENT")
                 .antMatchers("/cards.html").hasAuthority("CLIENT")
-                .antMatchers("/404.html").hasAuthority("CLIENT")
-                .antMatchers("/criptomonedas.html").hasAuthority("CLIENT")
-                .antMatchers("/ayuda.html").hasAuthority("CLIENT")
-                .antMatchers("/terminos_de_uso.html").hasAuthority("CLIENT")
                 .antMatchers("/create-cards.html").hasAuthority("CLIENT")
                 .antMatchers("/transfers.html").hasAuthority("CLIENT")
                 .antMatchers("/loan_application.html").hasAuthority("CLIENT")
                 .antMatchers("/payment_service.html").hasAuthority("CLIENT")
                 .antMatchers("/payment.html").hasAuthority("CLIENT")
 
-
-
-                //Permisos para TODOS
                 .antMatchers("/index.html").permitAll()
                 .antMatchers("/inicio_sesion.html").permitAll()
                 .antMatchers("/crear_usuario.html").permitAll();

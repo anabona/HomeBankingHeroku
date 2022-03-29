@@ -23,7 +23,6 @@ public class Card {
     private CardType cardType;
     private Boolean esActiva;
 
-    // Declaro la relacion Muchos a uno, quiere decir que muchas tarjetas pueden pertenecer a un Cliente
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "card_holder_id")
     private Client client;
@@ -46,7 +45,6 @@ public class Card {
 
     public Card(String number, Integer cvv, LocalDateTime expireDateThru, LocalDateTime expireDateFrom, CardType cardType, CardColor cardColor, Client client) {
 
-        //Concateno el nombre y el apellido para el cardHolder
         this.cardHolder = client.getFirstName()+" "+client.getLastName();
         this.number = number;
         this.cvv = cvv;

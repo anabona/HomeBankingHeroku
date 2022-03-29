@@ -11,7 +11,7 @@ let newCards = new Vue({
           if(this.color=="" || this.tipo==""){                                                
               Swal.fire({
                   icon: 'error',
-                  text: 'Faltan seleccionar alguna característica!',
+                  text: 'Falta seleccionar alguna característica!',
                   showConfirmButton: false
               });
           }else{
@@ -29,7 +29,6 @@ let newCards = new Vue({
                   .catch(function (error) {
                       if (error.response) {
                           console.log("ENTRA AL ERROR");
-                          // Con el catch atajo el error del response, eso quiere decir que el email o la contraseña son invalidas, o no encontró el usuario o la contraseña está mal, y lo muestro por pantalla
                           Swal.fire({
                               icon: 'error',
                               text: 'No se puede crear mas tarjetas, llegó al máximo permitido!',
@@ -41,7 +40,6 @@ let newCards = new Vue({
                       } else if (error.request) {
                           console.log(error.request);
                       } else {
-                          // Something happened in setting up the request that triggered an Error
                           console.log('Error', error.message);
                       }
                       console.log(error.config);

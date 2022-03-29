@@ -17,9 +17,7 @@ public class Transaction {
     private String description;
     private LocalDateTime date;
 
-    // Declaro la relacion Muchos a uno, quiere decir que una cuenta puede de una a muchas transacciones
     @ManyToOne(fetch = FetchType.EAGER)
-    //Le agrego una fila a la base de datos de transacciones, que se va a llamar accounnt_id, el cual es un identificador unico para la cuenta
     @JoinColumn(name = "account_owner_id")
     private Account account;
 

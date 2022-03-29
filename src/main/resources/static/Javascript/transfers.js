@@ -28,11 +28,9 @@ let transfers = new Vue({
                   
               })
               .catch(function (error) {
-                  // handle error
                   console.log(error);
               })
               .then(function () {
-                  // always executed
               });
       },
 
@@ -99,11 +97,9 @@ let transfers = new Vue({
               this.destinatario=response.data;
           })
           .catch(function (error) {
-              // handle error
               console.log(error);
           })
           .then(function () {
-              // always executed
           });
           console.log("llego aca");
           console.log(this.destinatario);

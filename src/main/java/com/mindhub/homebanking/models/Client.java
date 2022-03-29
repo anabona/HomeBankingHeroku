@@ -17,12 +17,10 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-
     private long id;
+
     private String firstName, lastName, email, password;
 
-    // Defino la relacion uno a muchos, quiere decir que un cliente puede tener más de una cuenta(1 o muchas), pero una cuenta solo puede pertenecer a un cliente
-    // Esto se declara especificamente para la BD
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     Set<Account> accounts = new HashSet<>();
 
@@ -32,7 +30,6 @@ public class Client {
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     Set<Card> cards = new HashSet<>();
 
-    //Constructores de la clase
     public Client() {}
 
     public Client(String firstName, String lastName, String email) {
@@ -70,7 +67,6 @@ public class Client {
 
     @JsonIgnore
     public List<Loan> getLoans(){
-        //recorro el Set de clientLoans y lo mapeo a una lista de elementos de tipo Loan
         return this.clientLoans.stream().map(cLoan -> cLoan.getLoan()).collect(toList());
     }
 
@@ -78,17 +74,14 @@ public class Client {
         return new ArrayList<>(this.clientLoans);
     }
 
-    // Devuelvo un Set de las tarjetas del cliente
     public Set<Card> getCards(){
         return this.cards;
     }
 
-    //Devuelvo la lista de accounts
     public Set<Account> getAccounts() {
         return accounts;
     }
 
-    //Setters
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -105,18 +98,15 @@ public class Client {
         this.password = password;
     }
 
-    //Agrego una nueva cuenta al cliente
     public void addAccount(Account account){
         account.setClient(this);
         accounts.add(account);
     }
-    //Agrego un ClientLoan al Client
     public void addClientLoan(ClientLoan clientLoan){
         clientLoan.setClient(this);
         this.clientLoans.add(clientLoan);
     }
 
-    //Agrego una tarjeta a la lista de tarjetas del cliente
     public void addCard(Card card){
         card.setClient(this);
         this.cards.add(card);

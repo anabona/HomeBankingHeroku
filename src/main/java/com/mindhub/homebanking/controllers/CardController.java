@@ -31,10 +31,8 @@ public class CardController {
         CardColor colorTarjeta = CardColor.valueOf(color);
         CardType tipoTarjeta = CardType.valueOf(tipo);
 
-        //Declaro un objeto utilities para acceder a las funcionalidades de creacion de numeros de tarjetas al azar, necesarios para crear las tarjetas
         Utilities utilities = new Utilities();
 
-        //Obtengo el cliente que está logeado para consultarle por la tarjeta
         Client currentClient = clientRepository.findByEmail(authentication.getName());
 
         if( currentClient.getCards().stream().filter(tarjeta->
@@ -50,7 +48,7 @@ public class CardController {
         return new ResponseEntity<>("201 Tarjeta creada correctamente",HttpStatus.CREATED);
     }
 
-    //Metodo para borrar una tarjeta, que en realidad cambia una variable boolean que dice si está activa o no, para que aparezca comno si estuviera borrada pero sigue estando en la BD
+    //Metodo para cambiar el estado de una tarjeta
     @PatchMapping("clients/delete/card")
     public ResponseEntity<Object> deleteCard(@RequestParam String cardNumber){
         System.out.println(cardNumber);
